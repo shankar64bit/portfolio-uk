@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shankar Mallesh — Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0b0f1a;
+      --surface: #111827;
+      --surface2: #1a2235;
+      --accent: #4f9cf9;
+      --accent2: #a78bfa;
+      --text: #e8edf5;
+      --muted: #8896b3;
+      --border: rgba(79,156,249,0.15);
+      --glow: rgba(79,156,249,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 4rem;
+      background: rgba(11,15,26,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 40%, rgba(79,156,249,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(167,139,250,0.06) 0%, transparent 50%);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(79,156,249,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,156,249,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 780px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      background: rgba(79,156,249,0.1);
+      border: 1px solid rgba(79,156,249,0.25);
+      border-radius: 100px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.75rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #6baaff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(79,156,249,0.3); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 5rem 4rem; }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+      line-height: 1.1;
+    }
+
+    .section-title span { color: var(--muted); }
+
+    /* ── ABOUT ── */
+    #about { background: var(--surface); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    .about-text p strong { color: var(--text); font-weight: 500; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+
+    .stat-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .stat-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label { font-size: 0.82rem; color: var(--muted); font-weight: 400; }
+
+    /* ── SKILLS ── */
+    #skills { max-width: 1100px; margin: 0 auto; padding: 5rem 4rem; }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.25s;
+    }
+
+    .skill-card:hover {
+      border-color: var(--accent);
+      background: var(--surface2);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px var(--glow);
+    }
+
+    .skill-icon {
+      font-size: 1.6rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.6rem;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      padding: 0.2rem 0.6rem;
+      background: rgba(79,156,249,0.08);
+      border: 1px solid rgba(79,156,249,0.15);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--surface); padding: 5rem 4rem; }
+    #experience .inner { max-width: 1100px; margin: 0 auto; }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      bottom: 0.5rem;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-bottom: 2.5rem;
+      padding-left: 2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.4rem;
+      top: 0.5rem;
+      width: 9px;
+      height: 9px;
+      background: var(--accent);
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 3px rgba(79,156,249,0.2);
+    }
+
+    .timeline-date {
+      font-size: 0.78rem;
+      color: var(--accent);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-role {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+
+    .timeline-company {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+      font-style: italic;
+    }
+
+    .timeline-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .timeline-bullets li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      padding-left: 1.2rem;
+      position: relative;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .timeline-bullets li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+
+    /* ── EDUCATION ── */
+    #education { max-width: 1100px; margin: 0 auto; padding: 5rem 4rem; }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .edu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      transition: all 0.25s;
+    }
+
+    .edu-card:hover { border-color: var(--accent2); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(167,139,250,0.1); }
+
+    .edu-degree {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .edu-uni { font-size: 0.88rem; color: var(--muted); font-style: italic; margin-bottom: 0.5rem; }
+    .edu-date { font-size: 0.78rem; color: var(--accent2); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--surface);
+      text-align: center;
+      padding: 5rem 4rem;
+    }
+
+    .contact-inner { max-width: 600px; margin: 0 auto; }
+
+    .contact-inner p {
+      color: var(--muted);
+      margin-bottom: 2rem;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .contact-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: all 0.2s;
+    }
+
+    .contact-item:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 1.5rem 4rem;
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    /* ── AVAILABILITY BANNER ── */
+    .avail-banner {
+      background: linear-gradient(135deg, rgba(79,156,249,0.1), rgba(167,139,250,0.1));
+      border: 1px solid rgba(79,156,249,0.2);
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.88rem;
+      color: var(--text);
+      margin-top: 2rem;
+    }
+
+    .avail-dot {
+      width: 8px; height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero, section { padding-left: 1.5rem; padding-right: 1.5rem; }
+      #skills, #education { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .edu-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">SM</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Available for Internships & Part-Time Roles</div>
+      <h1>Shankar<br><span>Mallesh</span></h1>
+      <p class="hero-sub">Software Engineer & MSc AI Student at Aston University — building full-stack and AI-powered applications across web and mobile platforms.</p>
+      <div class="hero-actions">
+        <a href="#experience" class="btn btn-primary">View My Work ↓</a>
+        <a href="https://github.com/shankar64bit" target="_blank" class="btn btn-outline">GitHub →</a>
+        <a href="#contact" class="btn btn-outline">Get In Touch</a>
+      </div>
+      <div class="avail-banner">
+        <span class="avail-dot"></span>
+        Based in Birmingham, UK · Student Visa · Up to 20hrs/week
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <span class="section-label">About Me</span>
+        <h2 class="section-title">Engineer by craft,<br><span>learner by nature</span></h2>
+        <p>I'm a <strong>UK-based Software Engineer</strong> currently pursuing my MSc in Data Science & Artificial Intelligence at Aston University, Birmingham.</p>
+        <p>With 2+ years of professional experience building <strong>cross-platform and full-stack applications</strong>, I bring a blend of production engineering instinct and growing AI expertise to every project I join.</p>
+        <p>I work across <strong>Flutter, React, Python, and REST APIs</strong>, and I'm actively developing skills in machine learning and data pipelines — bridging software engineering with intelligent systems.</p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-card">
+          <div class="stat-number">2+</div>
+          <div class="stat-label">Years Professional Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Live Production Roles</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">MSc</div>
+          <div class="stat-label">Data Science & AI · Aston University</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">UK</div>
+          <div class="stat-label">Birmingham · Available Now</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div style="max-width:1100px;margin:0 auto;">
+      <span class="section-label reveal">Technical Skills</span>
+      <h2 class="section-title reveal">What I build <span>with</span></h2>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <div class="skill-icon">🖥️</div>
+          <div class="skill-title">Languages & Frameworks</div>
+          <div class="skill-tags">
+            <span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">TypeScript</span>
+            <span class="tag">Dart</span><span class="tag">Flutter</span><span class="tag">React</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">⚙️</div>
+          <div class="skill-title">Backend & Data</div>
+          <div class="skill-tags">
+            <span class="tag">REST APIs</span><span class="tag">PostgreSQL</span>
+            <span class="tag">Supabase</span><span class="tag">Firebase</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🤖</div>
+          <div class="skill-title">AI & Data (Developing)</div>
+          <div class="skill-tags">
+            <span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Scikit-learn</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🛠️</div>
+          <div class="skill-title">Tools & Practices</div>
+          <div class="skill-tags">
+            <span class="tag">Git/GitHub</span><span class="tag">Agile</span>
+            <span class="tag">Clean Architecture</span><span class="tag">MVVM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="inner">
+      <span class="section-label reveal">Experience</span>
+      <h2 class="section-title reveal">Where I've <span>worked</span></h2>
+      <div class="timeline">
+
+        <div class="timeline-item reveal">
+          <div class="timeline-date">May 2025 – Aug 2025</div>
+          <div class="timeline-role">Full-Stack React Developer</div>
+          <div class="timeline-company">Paynosc · Freelance</div>
+          <ul class="timeline-bullets">
+            <li>Built a lending and borrowing platform with community-based financial features using React.</li>
+            <li>Integrated Supabase and PostgreSQL for secure transaction and data management.</li>
+            <li>Implemented AI-driven admin and user controls, enhancing UX and operational efficiency.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-date">Jul 2024 – Nov 2024</div>
+          <div class="timeline-role">React Developer</div>
+          <div class="timeline-company">Aplypse · Freelance</div>
+          <ul class="timeline-bullets">
+            <li>Developed an AI tools and news discovery platform using React.</li>
+            <li>Integrated AI-based content automation, improving user engagement and experience.</li>
+          </ul>
+        </div>
+
+        <div class="timeline-item reveal">
+          <div class="timeline-date">Aug 2022 – May 2024</div>
+          <div class="timeline-role">Junior Software Developer</div>
+          <div class="timeline-company">ARK Power Solutions Pvt. Ltd., India · Full-time</div>
+          <ul class="timeline-bullets">
+            <li>Developed and maintained cross-platform apps for Android, iOS, and Windows using Flutter.</li>
+            <li>Built scalable features from a single codebase, cutting cross-platform delivery time by ~30%.</li>
+            <li>Improved UI responsiveness and supported data migration activities.</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <span class="section-label reveal">Education</span>
+    <h2 class="section-title reveal">Academic <span>background</span></h2>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-date">2026 – Present</div>
+        <div class="edu-degree">MSc Data Science and Artificial Intelligence</div>
+        <div class="edu-uni">Aston University, Birmingham, UK</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="edu-date">2019 – 2022</div>
+        <div class="edu-degree">Bachelor of Computer Applications (BCA)</div>
+        <div class="edu-uni">Bangalore University, India</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <span class="section-label reveal">Contact</span>
+      <h2 class="section-title reveal">Let's <span>work together</span></h2>
+      <p class="reveal">I'm actively looking for software development internships, part-time roles, or graduate opportunities in the UK. Feel free to reach out!</p>
+      <div class="contact-links reveal">
+        <a href="mailto:shankar2space@gmail.com" class="contact-item">✉️ shankar2space@gmail.com</a>
+        <a href="https://github.com/shankar64bit" target="_blank" class="contact-item">⌨️ GitHub</a>
+        <a href="tel:+447344721899" class="contact-item">📞 +44 7344 721899</a>
+      </div>
+      <p class="reveal" style="font-size:0.82rem;color:var(--muted);">Birmingham, United Kingdom · Student Visa · Available up to 20 hrs/week</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Shankar Mallesh · Built with HTML, CSS & JavaScript</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
