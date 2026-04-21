@@ -248,6 +248,26 @@
         transform: translateY(-2px);
       }
 
+      .btn-download {
+        background: linear-gradient(
+          135deg,
+          rgba(79, 156, 249, 0.15),
+          rgba(167, 139, 250, 0.15)
+        );
+        color: var(--text);
+        border: 1px solid rgba(79, 156, 249, 0.35);
+      }
+      .btn-download:hover {
+        background: linear-gradient(
+          135deg,
+          rgba(79, 156, 249, 0.25),
+          rgba(167, 139, 250, 0.25)
+        );
+        border-color: var(--accent);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(79, 156, 249, 0.2);
+      }
+
       @keyframes fadeUp {
         from {
           opacity: 0;
@@ -711,12 +731,20 @@
         <div class="hero-actions">
           <a href="#experience" class="btn btn-primary">View My Work ↓</a>
           <a
+            href="Shankar_Mallesh_CV.pdf"
+            target="_blank"
+            class="btn btn-download"
+            >👁 View CV</a
+          >
+          <a href="Shankar_Mallesh_CV.pdf" download class="btn btn-outline"
+            >↓ Download CV</a
+          >
+          <a
             href="https://github.com/shankar64bit"
             target="_blank"
             class="btn btn-outline"
             >GitHub →</a
           >
-          <a href="#contact" class="btn btn-outline">Get In Touch</a>
         </div>
         <div class="avail-banner">
           <span class="avail-dot"></span>
@@ -913,7 +941,7 @@
           roles, or graduate opportunities in the UK. Feel free to reach out!
         </p>
         <div class="contact-links reveal">
-          <a href="mailto:shankar2space@gmail.com" class="contact-item"
+          <a href="mailto:shankar64bitcomputing@gmail.com" class="contact-item"
             >✉️ shankar64bitcomputing@gmail.com</a
           >
           <a
@@ -934,7 +962,7 @@
     </section>
 
     <footer>
-      <p>© 2026 Shankar Mallesh</p>
+      <p>© 2026 Shankar Mallesh · Built with HTML, CSS & JavaScript</p>
     </footer>
 
     <script>
