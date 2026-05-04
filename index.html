@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shankar Mallesh — Software Engineer</title>
+    <title>Shankar Mallesh — Applied AI Developer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
@@ -43,7 +43,6 @@
         overflow-x: hidden;
       }
 
-      /* ── NOISE TEXTURE OVERLAY ── */
       body::before {
         content: "";
         position: fixed;
@@ -429,6 +428,12 @@
         font-weight: 400;
       }
 
+      .tag-ai {
+        background: rgba(167, 139, 250, 0.1);
+        border-color: rgba(167, 139, 250, 0.25);
+        color: var(--accent2);
+      }
+
       /* ── EXPERIENCE ── */
       #experience {
         background: var(--surface);
@@ -571,6 +576,30 @@
         font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 0.06em;
+        margin-bottom: 0.8rem;
+      }
+
+      .edu-bullets {
+        list-style: none;
+        margin-top: 0.8rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+      .edu-bullets li {
+        font-size: 0.82rem;
+        color: var(--muted);
+        padding-left: 1.1rem;
+        position: relative;
+        font-weight: 300;
+        line-height: 1.5;
+      }
+      .edu-bullets li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--accent2);
+        font-size: 0.75rem;
       }
 
       /* ── CONTACT ── */
@@ -711,6 +740,12 @@
         <li><a href="#experience">Experience</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#contact">Contact</a></li>
+        <!-- IMPROVEMENT: Added Portfolio link to nav -->
+        <li>
+          <a href="https://shankar64bit.github.io/portfolio-uk" target="_blank"
+            >Portfolio ↗</a
+          >
+        </li>
       </ul>
     </nav>
 
@@ -719,24 +754,30 @@
       <div class="hero-bg"></div>
       <div class="hero-grid"></div>
       <div class="hero-content">
+        <!-- UPDATED: Badge text -->
         <div class="hero-badge">
-          Available for Internships & Part-Time Roles
+          Available · Up to 20hrs/week · UK Student Visa
         </div>
         <h1>Shankar<br /><span>Mallesh</span></h1>
+        <!-- UPDATED: Subtitle to match CV positioning -->
         <p class="hero-sub">
-          Software Engineer & MSc AI Student at Aston University — building
-          full-stack and AI-powered applications across web and mobile
-          platforms.
+          Applied AI Developer &amp; MSc Data Science &amp; AI student at Aston
+          University — building LLM-integrated, agentic and full-stack
+          applications that solve real-world problems.
         </p>
         <div class="hero-actions">
           <a href="#experience" class="btn btn-primary">View My Work ↓</a>
+          <!-- UPDATED: CV filename to match latest version -->
           <a
-            href="Shankar_Mallesh_CV.pdf"
+            href="Shankar_Mallesh_CV_v1_professional.pdf"
             target="_blank"
             class="btn btn-download"
             >👁 View CV</a
           >
-          <a href="Shankar_Mallesh_CV.pdf" download class="btn btn-outline"
+          <a
+            href="Shankar_Mallesh_CV_v1_professional.pdf"
+            download
+            class="btn btn-outline"
             >↓ Download CV</a
           >
           <a
@@ -746,9 +787,11 @@
             >GitHub →</a
           >
         </div>
+        <!-- UPDATED: Banner text -->
         <div class="avail-banner">
           <span class="avail-dot"></span>
-          Based in Birmingham, UK · Student Visa · Up to 20hrs/week
+          Birmingham, UK · Student Visa · Up to 20hrs/week · Open to Hybrid
+          &amp; On-site
         </div>
       </div>
     </section>
@@ -758,25 +801,31 @@
       <div class="about-grid">
         <div class="about-text reveal">
           <span class="section-label">About Me</span>
+          <!-- IMPROVEMENT: Tagline updated to reflect AI focus -->
           <h2 class="section-title">
-            Engineer by craft,<br /><span>learner by nature</span>
+            AI-first by design,<br /><span>engineer by craft</span>
           </h2>
+          <!-- UPDATED: About text aligned with CV profile -->
           <p>
-            I'm a <strong>UK-based Software Engineer</strong> currently pursuing
-            my MSc in Data Science & Artificial Intelligence at Aston
-            University, Birmingham.
+            I'm a <strong>UK-based Applied AI Developer</strong> currently
+            pursuing my MSc in Data Science &amp; Artificial Intelligence at
+            Aston University, Birmingham.
           </p>
           <p>
-            With 2+ years of professional experience building
-            <strong>cross-platform and full-stack applications</strong>, I bring
-            a blend of production engineering instinct and growing AI expertise
-            to every project I join.
+            With 2+ years of professional experience, I build
+            <strong>AI-integrated, full-stack applications</strong> in
+            production — from LLM pipelines and agentic workflow systems to
+            document processing tools and data automation platforms.
           </p>
           <p>
             I work across
-            <strong>Flutter, React, Python, and REST APIs</strong>, and I'm
-            actively developing skills in machine learning and data pipelines —
-            bridging software engineering with intelligent systems.
+            <strong>Python, SQL, JavaScript, TypeScript and React</strong>, with
+            practical expertise in
+            <strong
+              >NLP, RAG, generative AI and data pipeline development</strong
+            >
+            — bridging software engineering with intelligent systems that create
+            real operational impact.
           </p>
         </div>
         <div class="about-stats reveal">
@@ -785,12 +834,15 @@
             <div class="stat-label">Years Professional Experience</div>
           </div>
           <div class="stat-card">
+            <!-- UPDATED: 3 live production roles (Circlesave, Aplypse, ARK) -->
             <div class="stat-number">3</div>
             <div class="stat-label">Live Production Roles</div>
           </div>
           <div class="stat-card">
             <div class="stat-number">MSc</div>
-            <div class="stat-label">Data Science & AI · Aston University</div>
+            <div class="stat-label">
+              Data Science &amp; AI · Aston University
+            </div>
           </div>
           <div class="stat-card">
             <div class="stat-number">UK</div>
@@ -808,37 +860,58 @@
         <div class="skills-grid">
           <div class="skill-card reveal">
             <div class="skill-icon">🖥️</div>
-            <div class="skill-title">Languages & Frameworks</div>
+            <div class="skill-title">Languages &amp; Frameworks</div>
             <div class="skill-tags">
-              <span class="tag">Python</span><span class="tag">JavaScript</span
-              ><span class="tag">TypeScript</span> <span class="tag">Dart</span
-              ><span class="tag">Flutter</span><span class="tag">React</span>
+              <span class="tag">Python</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">TypeScript</span>
+              <span class="tag">Dart</span>
+              <span class="tag">Flutter</span>
+              <span class="tag">React</span>
             </div>
           </div>
+
           <div class="skill-card reveal">
             <div class="skill-icon">⚙️</div>
-            <div class="skill-title">Backend & Data</div>
+            <!-- UPDATED: Added SQL, Data Pipelines -->
+            <div class="skill-title">Backend &amp; Data</div>
             <div class="skill-tags">
-              <span class="tag">REST APIs</span
-              ><span class="tag">PostgreSQL</span>
-              <span class="tag">Supabase</span><span class="tag">Firebase</span>
+              <span class="tag">SQL</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">REST APIs</span>
+              <span class="tag">Data Pipelines</span>
+              <span class="tag">Supabase</span>
+              <span class="tag">Firebase</span>
             </div>
           </div>
+
           <div class="skill-card reveal">
             <div class="skill-icon">🤖</div>
-            <div class="skill-title">AI & Data (Developing)</div>
+            <!-- UPDATED: Full AI skill list, removed "Developing" label, added AI tags -->
+            <div class="skill-title">AI &amp; Machine Learning</div>
             <div class="skill-tags">
-              <span class="tag">Pandas</span><span class="tag">NumPy</span
-              ><span class="tag">Scikit-learn</span>
+              <span class="tag tag-ai">LLM Integration</span>
+              <span class="tag tag-ai">Agentic Workflows</span>
+              <span class="tag tag-ai">NLP</span>
+              <span class="tag tag-ai">RAG</span>
+              <span class="tag tag-ai">Generative AI</span>
+              <span class="tag">Scikit-learn</span>
+              <span class="tag">Pandas</span>
+              <span class="tag">NumPy</span>
             </div>
           </div>
+
           <div class="skill-card reveal">
             <div class="skill-icon">🛠️</div>
-            <div class="skill-title">Tools & Practices</div>
+            <!-- UPDATED: Added AI-assisted Dev, Vector Databases -->
+            <div class="skill-title">Tools &amp; Practices</div>
             <div class="skill-tags">
-              <span class="tag">Git/GitHub</span><span class="tag">Agile</span>
-              <span class="tag">Clean Architecture</span
-              ><span class="tag">MVVM</span>
+              <span class="tag">Git/GitHub</span>
+              <span class="tag tag-ai">AI-assisted Dev (Claude, Copilot)</span>
+              <span class="tag">Vector Databases</span>
+              <span class="tag">Clean Architecture</span>
+              <span class="tag">MVVM</span>
+              <span class="tag">Agile</span>
             </div>
           </div>
         </div>
@@ -851,59 +924,83 @@
         <span class="section-label reveal">Experience</span>
         <h2 class="section-title reveal">Where I've <span>worked</span></h2>
         <div class="timeline">
+          <!-- UPDATED: Paynosc → Circlesave, USA. Dates & bullets updated from CV -->
           <div class="timeline-item reveal">
-            <div class="timeline-date">May 2025 – Aug 2025</div>
-            <div class="timeline-role">Full-Stack React Developer</div>
-            <div class="timeline-company">Paynosc · Freelance</div>
+            <div class="timeline-date">May 2025 – Present · Remote</div>
+            <div class="timeline-role">Full-Stack AI Developer (Freelance)</div>
+            <div class="timeline-company">Circlesave · USA</div>
             <ul class="timeline-bullets">
               <li>
-                Built a lending and borrowing platform with community-based
-                financial features using React.
+                Built a community-based lending platform using React, Supabase
+                and PostgreSQL, designing SQL schemas for secure financial data
+                management and transaction processing.
               </li>
               <li>
-                Integrated Supabase and PostgreSQL for secure transaction and
-                data management.
+                Designed and implemented agentic AI controls for admin and user
+                workflows, automating complex operational decisions and
+                significantly reducing manual intervention.
               </li>
               <li>
-                Implemented AI-driven admin and user controls, enhancing UX and
-                operational efficiency.
+                Developed AI-driven data pipelines to process structured
+                transaction data, surfacing actionable insights for operational
+                decision-making.
+              </li>
+              <li>
+                Utilised AI-assisted development tooling (Claude) throughout the
+                build to accelerate delivery, maintain code quality and produce
+                clear technical documentation.
+              </li>
+            </ul>
+          </div>
+
+          <!-- UPDATED: Dates Aug–Dec 2024, updated bullets to match CV -->
+          <div class="timeline-item reveal">
+            <div class="timeline-date">Aug 2024 – Dec 2024 · Remote</div>
+            <div class="timeline-role">
+              React Developer — AI Tools Platform (Freelance)
+            </div>
+            <div class="timeline-company">Aplypse · India</div>
+            <ul class="timeline-bullets">
+              <li>
+                Developed a production AI tools and news discovery platform
+                using React, integrating multiple LLM APIs to automate content
+                ingestion, classification and delivery workflows.
+              </li>
+              <li>
+                Built document processing pipelines that extracted and
+                structured content from unstructured sources, directly improving
+                content relevance and user engagement.
+              </li>
+              <li>
+                Applied prompt engineering and agent-style orchestration to
+                automate editorial curation, demonstrating practical LLM tooling
+                experience in a live environment.
               </li>
             </ul>
           </div>
 
           <div class="timeline-item reveal">
-            <div class="timeline-date">Jul 2024 – Nov 2024</div>
-            <div class="timeline-role">React Developer</div>
-            <div class="timeline-company">Aplypse · Freelance</div>
-            <ul class="timeline-bullets">
-              <li>
-                Developed an AI tools and news discovery platform using React.
-              </li>
-              <li>
-                Integrated AI-based content automation, improving user
-                engagement and experience.
-              </li>
-            </ul>
-          </div>
-
-          <div class="timeline-item reveal">
-            <div class="timeline-date">Aug 2022 – May 2024</div>
-            <div class="timeline-role">Junior Software Developer</div>
+            <div class="timeline-date">Aug 2022 – May 2024 · Onsite</div>
+            <div class="timeline-role">
+              Junior Software Developer (Full-time)
+            </div>
             <div class="timeline-company">
-              ARK Power Solutions Pvt. Ltd., India · Full-time
+              ARK Power Solutions Pvt. Ltd. · India
             </div>
             <ul class="timeline-bullets">
               <li>
-                Developed and maintained cross-platform apps for Android, iOS,
-                and Windows using Flutter.
+                Developed and maintained cross-platform applications for
+                Android, iOS and Windows using Flutter, building scalable
+                features from a single shared codebase.
               </li>
               <li>
-                Built scalable features from a single codebase, cutting
-                cross-platform delivery time by ~30%.
+                Reduced cross-platform delivery time by approximately 30%
+                through clean architecture practices and shared component
+                design.
               </li>
               <li>
-                Improved UI responsiveness and supported data migration
-                activities.
+                Supported data migration activities and improved UI
+                responsiveness across production systems serving live customers.
               </li>
             </ul>
           </div>
@@ -916,13 +1013,26 @@
       <span class="section-label reveal">Education</span>
       <h2 class="section-title reveal">Academic <span>background</span></h2>
       <div class="edu-grid">
+        <!-- UPDATED: Added expected graduation, added bullet points from CV -->
         <div class="edu-card reveal">
-          <div class="edu-date">2026 – Present</div>
+          <div class="edu-date">2026 – 2027 (Expected)</div>
           <div class="edu-degree">
-            MSc Data Science and Artificial Intelligence
+            MSc Data Science and Artificial Intelligence (AI)
           </div>
           <div class="edu-uni">Aston University, Birmingham, UK</div>
+          <ul class="edu-bullets">
+            <li>
+              Key areas: machine learning, NLP, large language models, agentic
+              AI systems, knowledge representation and data pipeline
+              architecture.
+            </li>
+            <li>
+              Actively exploring RAG architectures, vector-enabled retrieval and
+              autonomous agent design — applied directly to freelance projects.
+            </li>
+          </ul>
         </div>
+
         <div class="edu-card reveal">
           <div class="edu-date">2019 – 2022</div>
           <div class="edu-degree">Bachelor of Computer Applications (BCA)</div>
@@ -936,9 +1046,12 @@
       <div class="contact-inner">
         <span class="section-label reveal">Contact</span>
         <h2 class="section-title reveal">Let's <span>work together</span></h2>
+        <!-- UPDATED: Role description updated from CV -->
         <p class="reveal">
-          I'm actively looking for software development internships, part-time
-          roles, or graduate opportunities in the UK. Feel free to reach out!
+          Available for Applied AI Developer internships, part-time or graduate
+          roles in the UK. Currently on a Student Visa — eligible to work up to
+          20 hours per week. Open to hybrid or on-site arrangements across the
+          UK.
         </p>
         <div class="contact-links reveal">
           <a href="mailto:shankar64bitcomputing@gmail.com" class="contact-item"
@@ -948,7 +1061,14 @@
             href="https://github.com/shankar64bit"
             target="_blank"
             class="contact-item"
-            >⌨️ GitHub</a
+            >⌨️ github.com/shankar64bit</a
+          >
+          <!-- IMPROVEMENT: Added Portfolio link to contact section -->
+          <a
+            href="https://shankar64bit.github.io/portfolio-uk"
+            target="_blank"
+            class="contact-item"
+            >🌐 Portfolio</a
           >
           <a href="tel:+447344721899" class="contact-item"
             >📞 +44 7344 721899</a
@@ -962,11 +1082,10 @@
     </section>
 
     <footer>
-      <p>© 2026 Shankar Mallesh</p>
+      <p>© 2026 Shankar Mallesh · Applied AI Developer · Birmingham, UK</p>
     </footer>
 
     <script>
-      // Scroll reveal
       const reveals = document.querySelectorAll(".reveal");
       const observer = new IntersectionObserver(
         (entries) => {
