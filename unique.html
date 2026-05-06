@@ -1,0 +1,2202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shankar Mallesh — Applied AI Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- SVG filter for blob cursor goo -->
+    <svg style="display: none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur" />
+          <feColorMatrix
+            in="blur"
+            mode="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"
+            result="goo"
+          />
+        </filter>
+      </defs>
+    </svg>
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #020408;
+        --surface: #080e1a;
+        --surface2: #0d1525;
+        --cyan: #00e5ff;
+        --magenta: #ff1a6b;
+        --green: #00ff88;
+        --text: #f0f4ff;
+        --muted: #3d5570;
+        --muted2: #7a95b5;
+        --border: rgba(0, 229, 255, 0.1);
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: "DM Sans", sans-serif;
+        font-size: 16px;
+        line-height: 1.6;
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      /* ── CURSOR ── */
+      #cursor-wrap {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 99999;
+        filter: url(#goo);
+      }
+      #cursor-blob {
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        background: var(--cyan);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.7;
+        mix-blend-mode: screen;
+        transition:
+          width 0.25s,
+          height 0.25s,
+          background 0.25s,
+          opacity 0.25s;
+        will-change: transform;
+      }
+      #cursor-dot {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background: #fff;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        will-change: transform;
+      }
+      body.hover-link #cursor-blob {
+        width: 72px;
+        height: 72px;
+        background: var(--magenta);
+      }
+      body.hover-btn #cursor-blob {
+        width: 56px;
+        height: 56px;
+        background: var(--green);
+      }
+
+      /* ── SCROLL BAR ── */
+      #scroll-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 2px;
+        width: 0%;
+        background: linear-gradient(90deg, var(--cyan), var(--magenta));
+        z-index: 99998;
+        box-shadow: 0 0 10px var(--cyan);
+        transition: width 0.08s linear;
+      }
+
+      /* ── WEBGL BG ── */
+      #gl-canvas {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.85;
+      }
+
+      /* ── NAV ── */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.4rem 4rem;
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      nav.solid {
+        background: rgba(2, 4, 8, 0.82);
+        backdrop-filter: blur(24px);
+        border-bottom: 1px solid var(--border);
+        padding: 0.9rem 4rem;
+      }
+      .nav-logo {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: var(--cyan);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        position: relative;
+      }
+      .nav-logo span {
+        color: var(--magenta);
+      }
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+      }
+      .nav-links a {
+        color: var(--muted2);
+        text-decoration: none;
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition: color 0.2s;
+        cursor: none;
+        position: relative;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: var(--cyan);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.25s;
+      }
+      .nav-links a:hover {
+        color: var(--text);
+      }
+      .nav-links a:hover::after {
+        transform: scaleX(1);
+      }
+
+      /* ── HERO ── */
+      .hero {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 10rem 4rem 4rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-family: "Space Mono", monospace;
+        font-size: 0.72rem;
+        color: var(--green);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeUp 0.7s 0.3s ease forwards;
+      }
+      .hero-eyebrow::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        background: var(--green);
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+        box-shadow: 0 0 10px var(--green);
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1.8);
+          opacity: 0.4;
+        }
+      }
+
+      /* Kinetic letters */
+      .kinetic-name {
+        font-family: "Syne", sans-serif;
+        font-weight: 800;
+        line-height: 0.88;
+        letter-spacing: -0.04em;
+        margin-bottom: 2.5rem;
+        user-select: none;
+        opacity: 0;
+        animation: fadeIn 0.1s 0.5s forwards;
+      }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+
+      .name-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 0.02em;
+      }
+
+      .k-letter {
+        display: inline-block;
+        font-size: clamp(4rem, 9vw, 8rem);
+        background: linear-gradient(
+          135deg,
+          var(--text) 40%,
+          rgba(240, 244, 255, 0.4)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        will-change: transform;
+        cursor: none;
+        transition: transform 0.05s linear;
+      }
+      .k-letter.accent {
+        background: linear-gradient(135deg, var(--cyan), var(--magenta));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .name-gap {
+        width: 0.35em;
+        display: inline-block;
+      }
+
+      .hero-sub {
+        font-family: "Space Mono", monospace;
+        font-size: 0.85rem;
+        color: var(--muted2);
+        max-width: 520px;
+        margin-bottom: 3rem;
+        line-height: 1.9;
+        opacity: 0;
+        animation: fadeUp 0.7s 0.7s ease forwards;
+      }
+      .typed-cursor {
+        display: inline-block;
+        width: 2px;
+        height: 0.9em;
+        background: var(--cyan);
+        margin-left: 1px;
+        vertical-align: middle;
+        animation: blink 0.7s step-end infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 1.2rem;
+        flex-wrap: wrap;
+        opacity: 0;
+        animation: fadeUp 0.7s 0.9s ease forwards;
+      }
+
+      .hero-scroll-hint {
+        position: absolute;
+        bottom: 3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: "Space Mono", monospace;
+        font-size: 0.65rem;
+        color: var(--muted);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        opacity: 0;
+        animation: fadeUp 0.7s 1.4s ease forwards;
+      }
+      .scroll-arrow {
+        width: 18px;
+        height: 28px;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        border-radius: 9px;
+        position: relative;
+      }
+      .scroll-arrow::after {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 3px;
+        height: 6px;
+        background: var(--cyan);
+        border-radius: 2px;
+        animation: scrollBounce 1.5s infinite;
+      }
+      @keyframes scrollBounce {
+        0%,
+        100% {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+        }
+        60% {
+          opacity: 0.3;
+          transform: translateX(-50%) translateY(8px);
+        }
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ── BUTTONS ── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.8rem 2rem;
+        border-radius: 3px;
+        font-family: "Space Mono", monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition:
+          transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.3s;
+        cursor: none;
+        border: none;
+        position: relative;
+        overflow: hidden;
+        will-change: transform;
+      }
+      .btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.05);
+        transform: translateX(-100%) skewX(-20deg);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .btn:hover::after {
+        transform: translateX(100%) skewX(-20deg);
+      }
+      .btn-primary {
+        background: var(--cyan);
+        color: #000;
+        font-weight: 700;
+      }
+      .btn-primary:hover {
+        box-shadow:
+          0 0 40px rgba(0, 229, 255, 0.5),
+          0 0 80px rgba(0, 229, 255, 0.2);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--text);
+        border: 1px solid rgba(0, 229, 255, 0.25);
+      }
+      .btn-ghost:hover {
+        border-color: var(--cyan);
+        color: var(--cyan);
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+      }
+      .btn-magenta {
+        background: var(--magenta);
+        color: #fff;
+        font-weight: 700;
+      }
+      .btn-magenta:hover {
+        box-shadow: 0 0 40px rgba(255, 26, 107, 0.5);
+      }
+
+      /* ── DIAGONAL SECTION DIVIDER ── */
+      .diag-top {
+        clip-path: polygon(0 4vw, 100% 0, 100% 100%, 0 100%);
+        margin-top: -4vw;
+      }
+      .diag-top-r {
+        clip-path: polygon(0 0, 100% 4vw, 100% 100%, 0 100%);
+        margin-top: -4vw;
+      }
+      .diag-pad {
+        padding-top: calc(6rem + 4vw);
+      }
+
+      /* ── SECTION LABELS ── */
+      .section-label {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        color: var(--cyan);
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 0.8rem;
+      }
+      .section-label::before {
+        content: "";
+        display: block;
+        width: 2rem;
+        height: 1px;
+        background: var(--cyan);
+      }
+
+      .section-title {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        line-height: 1.05;
+        margin-bottom: 3rem;
+      }
+      .section-title .dim {
+        color: var(--muted);
+      }
+      .section-title .hi {
+        background: linear-gradient(90deg, var(--cyan), var(--magenta));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      /* ── ABOUT ── */
+      #about {
+        background: var(--surface);
+        padding: 8rem 4rem;
+        position: relative;
+        z-index: 1;
+      }
+      .about-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+        align-items: start;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .about-quote {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1.15;
+        color: var(--text);
+      }
+      .about-quote .hi {
+        color: var(--cyan);
+      }
+      .about-quote .dim {
+        color: var(--muted2);
+      }
+      .about-body p {
+        font-size: 0.95rem;
+        color: var(--muted2);
+        margin-bottom: 1rem;
+        font-weight: 300;
+        line-height: 1.9;
+      }
+      .about-body p strong {
+        color: var(--text);
+        font-weight: 500;
+      }
+
+      /* Terminal */
+      .terminal {
+        background: #000;
+        border: 1px solid rgba(0, 229, 255, 0.2);
+        border-radius: 6px;
+        overflow: hidden;
+        margin-top: 2rem;
+        box-shadow:
+          0 0 40px rgba(0, 229, 255, 0.05),
+          inset 0 0 20px rgba(0, 0, 0, 0.5);
+      }
+      .terminal-bar {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 0.6rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        border-bottom: 1px solid rgba(0, 229, 255, 0.1);
+      }
+      .terminal-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+      .terminal-dot.r {
+        background: #ff5f56;
+      }
+      .terminal-dot.y {
+        background: #ffbd2e;
+      }
+      .terminal-dot.g {
+        background: #27c93f;
+      }
+      .terminal-title {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        color: var(--muted2);
+        margin-left: 0.5rem;
+      }
+      .terminal-body {
+        padding: 1.2rem 1.4rem;
+        font-family: "Space Mono", monospace;
+        font-size: 0.74rem;
+        line-height: 1.8;
+        color: #4ade80;
+        min-height: 180px;
+      }
+      .t-prompt {
+        color: var(--cyan);
+      }
+      .t-comment {
+        color: var(--muted);
+      }
+
+      /* Stats row */
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        overflow: hidden;
+        margin-top: 3rem;
+      }
+      .stat-cell {
+        background: var(--surface2);
+        padding: 1.6rem 1.2rem;
+        text-align: center;
+        transition: background 0.25s;
+      }
+      .stat-cell:hover {
+        background: #111f35;
+      }
+      .stat-num {
+        font-family: "Syne", sans-serif;
+        font-size: 2.2rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--cyan), var(--magenta));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        display: block;
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .stat-lbl {
+        font-size: 0.72rem;
+        color: var(--muted2);
+        font-family: "Space Mono", monospace;
+        letter-spacing: 0.06em;
+      }
+
+      /* ── SKILLS ── */
+      #skills {
+        padding: 8rem 4rem;
+        position: relative;
+        z-index: 1;
+      }
+      #skills .inner {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+      }
+
+      /* Holographic cards */
+      .holo-card {
+        background: var(--surface);
+        border: 1px solid transparent;
+        border-radius: 8px;
+        padding: 2rem;
+        position: relative;
+        overflow: hidden;
+        transition:
+          transform 0.15s linear,
+          box-shadow 0.3s;
+        transform-style: preserve-3d;
+        will-change: transform;
+        cursor: none;
+      }
+      .holo-card::before {
+        content: "";
+        position: absolute;
+        inset: -1px;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(
+          var(--holo-angle, 135deg),
+          rgba(0, 229, 255, 0.6),
+          rgba(255, 26, 107, 0.6),
+          rgba(0, 255, 136, 0.6),
+          rgba(0, 229, 255, 0.6)
+        );
+        -webkit-mask:
+          linear-gradient(#000 0 0) content-box,
+          linear-gradient(#000 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .holo-card:hover::before {
+        opacity: 1;
+      }
+      .holo-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at var(--mx, 50%) var(--my, 50%),
+          rgba(255, 255, 255, 0.06) 0%,
+          transparent 60%
+        );
+        transition: opacity 0.3s;
+        opacity: 0;
+      }
+      .holo-card:hover::after {
+        opacity: 1;
+      }
+
+      /* Marching ants on skills inner */
+      .march-border {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background:
+          linear-gradient(90deg, var(--cyan) 50%, transparent 50%) top/16px 1px
+            repeat-x,
+          linear-gradient(90deg, var(--cyan) 50%, transparent 50%) bottom/16px
+            1px repeat-x,
+          linear-gradient(0deg, var(--cyan) 50%, transparent 50%) left/1px 16px
+            repeat-y,
+          linear-gradient(0deg, var(--cyan) 50%, transparent 50%) right/1px 16px
+            repeat-y;
+        opacity: 0;
+        animation: march 1s linear infinite;
+        transition: opacity 0.3s;
+        pointer-events: none;
+      }
+      .holo-card:hover .march-border {
+        opacity: 0.4;
+      }
+      @keyframes march {
+        to {
+          background-position:
+            top 16px,
+            bottom -16px,
+            left -16px,
+            right 16px;
+        }
+      }
+
+      .skill-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+      .skill-title {
+        font-family: "Syne", sans-serif;
+        font-weight: 700;
+        font-size: 0.8rem;
+        color: var(--cyan);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        margin-bottom: 1rem;
+      }
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+      .tag {
+        padding: 0.25rem 0.75rem;
+        background: rgba(0, 229, 255, 0.06);
+        border: 1px solid rgba(0, 229, 255, 0.14);
+        border-radius: 2px;
+        font-family: "Space Mono", monospace;
+        font-size: 0.65rem;
+        color: var(--text);
+        transition: all 0.2s;
+      }
+      .tag:hover {
+        background: rgba(0, 229, 255, 0.14);
+        border-color: rgba(0, 229, 255, 0.35);
+        transform: translateY(-2px);
+      }
+      .tag-ai {
+        background: rgba(255, 26, 107, 0.07);
+        border-color: rgba(255, 26, 107, 0.2);
+        color: rgba(255, 120, 170, 1);
+      }
+      .tag-ai:hover {
+        background: rgba(255, 26, 107, 0.15);
+        border-color: rgba(255, 26, 107, 0.4);
+      }
+
+      /* ── EXPERIENCE ── */
+      #experience {
+        background: var(--surface);
+        padding: 8rem 4rem;
+        position: relative;
+        z-index: 1;
+      }
+      #experience .inner {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* 3D perspective timeline */
+      .timeline {
+        perspective: 1200px;
+        padding-left: 2.5rem;
+        position: relative;
+      }
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+          to bottom,
+          var(--cyan),
+          var(--magenta),
+          transparent
+        );
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-left: 2.5rem;
+        padding-bottom: 3.5rem;
+        transform-origin: left center;
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .timeline-item:hover {
+        transform: translateX(8px);
+      }
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -2.9rem;
+        top: 0.5rem;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--bg);
+        border: 2px solid var(--cyan);
+        box-shadow:
+          0 0 12px var(--cyan),
+          0 0 4px var(--cyan) inset;
+        transition: box-shadow 0.3s;
+      }
+      .timeline-item:hover::before {
+        box-shadow:
+          0 0 24px var(--cyan),
+          0 0 8px var(--cyan) inset,
+          0 0 40px rgba(0, 229, 255, 0.3);
+      }
+
+      .t-date {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        color: var(--cyan);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+      }
+      .t-role {
+        font-family: "Syne", sans-serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+      }
+      .t-company {
+        font-family: "Space Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--magenta);
+        margin-bottom: 1rem;
+        letter-spacing: 0.05em;
+      }
+      .t-bullets {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .t-bullets li {
+        font-size: 0.88rem;
+        color: var(--muted2);
+        padding-left: 1.4rem;
+        position: relative;
+        font-weight: 300;
+        line-height: 1.7;
+        transition: color 0.2s;
+      }
+      .t-bullets li::before {
+        content: "▸";
+        position: absolute;
+        left: 0;
+        color: var(--cyan);
+        font-size: 0.8rem;
+      }
+      .timeline-item:hover .t-bullets li {
+        color: var(--text);
+      }
+
+      /* ── EDUCATION ── */
+      #education {
+        padding: 8rem 4rem;
+        position: relative;
+        z-index: 1;
+      }
+      #education .inner {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .edu-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+      .edu-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .edu-card::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 200px;
+        height: 200px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 26, 107, 0.08) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+      }
+      .edu-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(255, 26, 107, 0.3);
+        box-shadow: 0 20px 60px rgba(255, 26, 107, 0.08);
+      }
+      .edu-date {
+        font-family: "Space Mono", monospace;
+        font-size: 0.68rem;
+        color: var(--magenta);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 0.8rem;
+      }
+      .edu-degree {
+        font-family: "Syne", sans-serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+      }
+      .edu-uni {
+        font-size: 0.85rem;
+        color: var(--muted2);
+        font-style: italic;
+        margin-bottom: 1rem;
+      }
+      .edu-bullets {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+      .edu-bullets li {
+        font-size: 0.82rem;
+        color: var(--muted2);
+        padding-left: 1.3rem;
+        position: relative;
+        font-weight: 300;
+        line-height: 1.6;
+      }
+      .edu-bullets li::before {
+        content: "▸";
+        position: absolute;
+        left: 0;
+        color: var(--magenta);
+        font-size: 0.76rem;
+      }
+
+      /* ── CONTACT ── */
+      #contact {
+        background: var(--surface);
+        padding: 8rem 4rem;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+      }
+      .contact-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Data stream canvas */
+      #data-canvas {
+        position: absolute;
+        inset: 0;
+        opacity: 0.12;
+        pointer-events: none;
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6rem;
+        align-items: center;
+      }
+      .contact-left .big-text {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 1;
+        margin-bottom: 1.5rem;
+      }
+      .contact-left .big-text span {
+        color: var(--cyan);
+      }
+      .contact-left p {
+        font-size: 0.93rem;
+        color: var(--muted2);
+        font-weight: 300;
+        line-height: 1.9;
+        margin-bottom: 2rem;
+      }
+
+      .avail-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.6rem 1.2rem;
+        background: rgba(0, 255, 136, 0.07);
+        border: 1px solid rgba(0, 255, 136, 0.2);
+        border-radius: 3px;
+        font-family: "Space Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.1em;
+        color: var(--green);
+        margin-bottom: 2rem;
+      }
+      .avail-pill::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        background: var(--green);
+        border-radius: 50%;
+        box-shadow: 0 0 10px var(--green);
+        animation: pulse 2s infinite;
+      }
+
+      .contact-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      .contact-link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.4rem;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        color: var(--text);
+        text-decoration: none;
+        font-family: "Space Mono", monospace;
+        font-size: 0.76rem;
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: none;
+        position: relative;
+        overflow: hidden;
+      }
+      .contact-link::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--cyan);
+        transform: scaleY(0);
+        transform-origin: bottom;
+        transition: transform 0.25s;
+      }
+      .contact-link:hover {
+        border-color: rgba(0, 229, 255, 0.3);
+        transform: translateX(8px);
+        color: var(--cyan);
+      }
+      .contact-link:hover::before {
+        transform: scaleY(1);
+      }
+      .contact-link-icon {
+        font-size: 1.1rem;
+        min-width: 1.5rem;
+        text-align: center;
+      }
+
+      /* ── FOOTER ── */
+      footer {
+        text-align: center;
+        padding: 1.5rem;
+        background: var(--bg);
+        border-top: 1px solid var(--border);
+        font-family: "Space Mono", monospace;
+        font-size: 0.65rem;
+        color: var(--muted);
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ── REVEAL ── */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      /* Stagger groups */
+      .skills-grid .holo-card:nth-child(1) {
+        transition-delay: 0.05s;
+      }
+      .skills-grid .holo-card:nth-child(2) {
+        transition-delay: 0.12s;
+      }
+      .skills-grid .holo-card:nth-child(3) {
+        transition-delay: 0.19s;
+      }
+      .skills-grid .holo-card:nth-child(4) {
+        transition-delay: 0.26s;
+      }
+      .timeline-item:nth-child(1) {
+        transition-delay: 0.05s;
+      }
+      .timeline-item:nth-child(2) {
+        transition-delay: 0.18s;
+      }
+      .timeline-item:nth-child(3) {
+        transition-delay: 0.31s;
+      }
+      .edu-grid .edu-card:nth-child(1) {
+        transition-delay: 0.05s;
+      }
+      .edu-grid .edu-card:nth-child(2) {
+        transition-delay: 0.15s;
+      }
+      .contact-links .contact-link:nth-child(1) {
+        transition-delay: 0.05s;
+      }
+      .contact-links .contact-link:nth-child(2) {
+        transition-delay: 0.1s;
+      }
+      .contact-links .contact-link:nth-child(3) {
+        transition-delay: 0.15s;
+      }
+      .contact-links .contact-link:nth-child(4) {
+        transition-delay: 0.2s;
+      }
+
+      /* Chromatic aberration on glitch */
+      .glitch-hover {
+        position: relative;
+        display: inline-block;
+      }
+      .glitch-hover::before,
+      .glitch-hover::after {
+        content: attr(data-text);
+        position: absolute;
+        inset: 0;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        letter-spacing: inherit;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .glitch-hover::before {
+        background: linear-gradient(135deg, #ff003c, #ff8800);
+        animation-name: glitch1;
+      }
+      .glitch-hover::after {
+        background: linear-gradient(135deg, #00e5ff, #8800ff);
+        animation-name: glitch2;
+      }
+      .glitch-hover:hover::before,
+      .glitch-hover:hover::after {
+        opacity: 0.35;
+        animation-duration: 0.25s;
+        animation-timing-function: step-end;
+        animation-iteration-count: infinite;
+      }
+      @keyframes glitch1 {
+        0% {
+          clip-path: inset(15% 0 70% 0);
+          transform: translate(-4px);
+        }
+        25% {
+          clip-path: inset(65% 0 5% 0);
+          transform: translate(4px);
+        }
+        50% {
+          clip-path: inset(35% 0 45% 0);
+          transform: translate(-3px);
+        }
+        75% {
+          clip-path: inset(80% 0 2% 0);
+          transform: translate(3px);
+        }
+        100% {
+          clip-path: inset(25% 0 55% 0);
+          transform: translate(-4px);
+        }
+      }
+      @keyframes glitch2 {
+        0% {
+          clip-path: inset(75% 0 5% 0);
+          transform: translate(4px);
+        }
+        25% {
+          clip-path: inset(10% 0 65% 0);
+          transform: translate(-4px);
+        }
+        50% {
+          clip-path: inset(50% 0 25% 0);
+          transform: translate(3px);
+        }
+        75% {
+          clip-path: inset(5% 0 85% 0);
+          transform: translate(-3px);
+        }
+        100% {
+          clip-path: inset(40% 0 35% 0);
+          transform: translate(4px);
+        }
+      }
+
+      @media (max-width: 900px) {
+        nav {
+          padding: 1rem 1.5rem;
+        }
+        .nav-links {
+          display: none;
+        }
+        .hero,
+        .section,
+        .about-grid,
+        .skills-grid,
+        .edu-grid,
+        .contact-grid {
+          grid-template-columns: 1fr;
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+        }
+        #about,
+        #skills,
+        #experience,
+        #education,
+        #contact {
+          padding: 5rem 1.5rem;
+        }
+        .stats-row {
+          grid-template-columns: 1fr 1fr;
+        }
+        body {
+          cursor: auto;
+        }
+        #cursor-wrap {
+          display: none;
+        }
+        .k-letter {
+          font-size: clamp(2.5rem, 12vw, 5rem);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- CURSOR -->
+    <div id="cursor-wrap">
+      <div id="cursor-blob"></div>
+      <div id="cursor-dot"></div>
+    </div>
+
+    <!-- SCROLL PROGRESS -->
+    <div id="scroll-bar"></div>
+
+    <!-- WEBGL CANVAS -->
+    <canvas id="gl-canvas"></canvas>
+
+    <!-- NAV -->
+    <nav id="navbar">
+      <div class="nav-logo">S<span>M</span></div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li>
+          <a href="https://shankar64bit.github.io/portfolio-uk" target="_blank"
+            >Portfolio ↗</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-eyebrow">
+        Available Now · UK Student Visa · Birmingham
+      </div>
+      <div class="kinetic-name" id="kinetic-name">
+        <div class="name-row" id="row-1">
+          <!-- letters injected by JS -->
+        </div>
+        <div class="name-row" id="row-2"></div>
+      </div>
+      <p class="hero-sub">
+        <span id="hero-typed"></span><span class="typed-cursor"></span>
+      </p>
+      <div class="hero-actions">
+        <a href="#experience" class="btn btn-primary mag-btn">View Work ↓</a>
+        <a
+          href="Shankar_Mallesh_CV_v1_professional.pdf"
+          target="_blank"
+          class="btn btn-magenta mag-btn"
+          >👁 View CV</a
+        >
+        <a
+          href="Shankar_Mallesh_CV_v1_professional.pdf"
+          download
+          class="btn btn-ghost mag-btn"
+          >↓ CV Download</a
+        >
+        <a
+          href="https://github.com/shankar64bit"
+          target="_blank"
+          class="btn btn-ghost mag-btn"
+          >GitHub →</a
+        >
+      </div>
+      <div class="hero-scroll-hint">
+        <div class="scroll-arrow"></div>
+        Scroll
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="diag-top diag-pad">
+      <div class="about-grid">
+        <div class="reveal">
+          <span class="section-label">About Me</span>
+          <div
+            class="about-quote glitch-hover"
+            data-text="AI-first by design. Engineer by craft."
+          >
+            AI-first by design.<br /><span class="dim">Engineer by craft.</span>
+          </div>
+          <br />
+          <div class="terminal reveal">
+            <div class="terminal-bar">
+              <div class="terminal-dot r"></div>
+              <div class="terminal-dot y"></div>
+              <div class="terminal-dot g"></div>
+              <span class="terminal-title"
+                >shankar@neural-forge ~ profile.sh</span
+              >
+            </div>
+            <div class="terminal-body" id="terminal-out"></div>
+          </div>
+        </div>
+        <div class="reveal">
+          <span class="section-label">Profile</span>
+          <div class="about-body">
+            <p>
+              I'm a <strong>UK-based Applied AI Developer</strong> pursuing my
+              MSc in Data Science &amp; AI at Aston University, Birmingham.
+            </p>
+            <p>
+              With 2+ years of professional experience, I build
+              <strong>AI-integrated, full-stack applications</strong> in
+              production — from LLM pipelines and agentic workflow systems to
+              document processing tools and data automation platforms.
+            </p>
+            <p>
+              I work across
+              <strong>Python, SQL, JavaScript, TypeScript and React</strong>,
+              with expertise in
+              <strong
+                >NLP, RAG, generative AI and data pipeline development</strong
+              >
+              — bridging software engineering with intelligent systems.
+            </p>
+          </div>
+          <div class="stats-row reveal">
+            <div class="stat-cell">
+              <span class="stat-num" data-count="2">0</span>
+              <div class="stat-lbl">Yrs Experience</div>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-num" data-count="3">0</span>
+              <div class="stat-lbl">Live Roles</div>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-num">MSc</span>
+              <div class="stat-lbl">DS &amp; AI</div>
+            </div>
+            <div class="stat-cell">
+              <span class="stat-num">UK</span>
+              <div class="stat-lbl">Available</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="diag-top-r diag-pad">
+      <div class="inner">
+        <span class="section-label reveal">Technical Stack</span>
+        <h2 class="section-title reveal">
+          What I <span class="hi">forge</span> <span class="dim">with</span>
+        </h2>
+        <div class="skills-grid">
+          <div class="holo-card reveal">
+            <div class="march-border"></div>
+            <div class="skill-icon">🖥️</div>
+            <div class="skill-title">Languages &amp; Frameworks</div>
+            <div class="skill-tags">
+              <span class="tag">Python</span><span class="tag">JavaScript</span
+              ><span class="tag">TypeScript</span><span class="tag">Dart</span
+              ><span class="tag">Flutter</span><span class="tag">React</span>
+            </div>
+          </div>
+          <div class="holo-card reveal">
+            <div class="march-border"></div>
+            <div class="skill-icon">⚙️</div>
+            <div class="skill-title">Backend &amp; Data</div>
+            <div class="skill-tags">
+              <span class="tag">SQL</span><span class="tag">PostgreSQL</span
+              ><span class="tag">REST APIs</span
+              ><span class="tag">Data Pipelines</span
+              ><span class="tag">Supabase</span
+              ><span class="tag">Firebase</span>
+            </div>
+          </div>
+          <div class="holo-card reveal">
+            <div class="march-border"></div>
+            <div class="skill-icon">🤖</div>
+            <div class="skill-title">AI &amp; Machine Learning</div>
+            <div class="skill-tags">
+              <span class="tag tag-ai">LLM Integration</span
+              ><span class="tag tag-ai">Agentic Workflows</span
+              ><span class="tag tag-ai">NLP</span
+              ><span class="tag tag-ai">RAG</span
+              ><span class="tag tag-ai">Generative AI</span
+              ><span class="tag">Scikit-learn</span
+              ><span class="tag">Pandas</span><span class="tag">NumPy</span>
+            </div>
+          </div>
+          <div class="holo-card reveal">
+            <div class="march-border"></div>
+            <div class="skill-icon">🛠️</div>
+            <div class="skill-title">Tools &amp; Practices</div>
+            <div class="skill-tags">
+              <span class="tag">Git/GitHub</span
+              ><span class="tag tag-ai">Claude</span
+              ><span class="tag tag-ai">Copilot</span
+              ><span class="tag">Vector Databases</span
+              ><span class="tag">Clean Architecture</span
+              ><span class="tag">MVVM</span><span class="tag">Agile</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="diag-top diag-pad">
+      <div class="inner">
+        <span class="section-label reveal">Experience</span>
+        <h2 class="section-title reveal">
+          Where I've <span class="dim">built</span>
+        </h2>
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <div class="t-date">May 2025 – Present · Remote</div>
+            <div class="t-role">Full-Stack AI Developer</div>
+            <div class="t-company">// Circlesave · USA</div>
+            <ul class="t-bullets">
+              <li>
+                Built a community-based lending platform using React, Supabase
+                and PostgreSQL, designing SQL schemas for secure financial data
+                management.
+              </li>
+              <li>
+                Designed and implemented agentic AI controls for admin and user
+                workflows, automating complex operational decisions and reducing
+                manual intervention.
+              </li>
+              <li>
+                Developed AI-driven data pipelines to process structured
+                transaction data, surfacing actionable insights for operational
+                decision-making.
+              </li>
+              <li>
+                Utilised Claude throughout the build to accelerate delivery,
+                maintain code quality and produce clear technical documentation.
+              </li>
+            </ul>
+          </div>
+          <div class="timeline-item reveal">
+            <div class="t-date">Aug 2024 – Dec 2024 · Remote</div>
+            <div class="t-role">React Developer — AI Tools Platform</div>
+            <div class="t-company">// Aplypse · India</div>
+            <ul class="t-bullets">
+              <li>
+                Developed a production AI tools and news discovery platform
+                using React, integrating multiple LLM APIs to automate content
+                ingestion and classification.
+              </li>
+              <li>
+                Built document processing pipelines extracting structured
+                content from unstructured sources, improving content relevance
+                and user engagement.
+              </li>
+              <li>
+                Applied prompt engineering and agent-style orchestration to
+                automate editorial curation in a live environment.
+              </li>
+            </ul>
+          </div>
+          <div class="timeline-item reveal">
+            <div class="t-date">Aug 2022 – May 2024 · Onsite</div>
+            <div class="t-role">Junior Software Developer</div>
+            <div class="t-company">// ARK Power Solutions · India</div>
+            <ul class="t-bullets">
+              <li>
+                Developed and maintained cross-platform applications for
+                Android, iOS and Windows using Flutter from a single shared
+                codebase.
+              </li>
+              <li>
+                Reduced cross-platform delivery time by ~30% through clean
+                architecture practices and shared component design.
+              </li>
+              <li>
+                Supported data migration and improved UI responsiveness across
+                production systems serving live customers.
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="diag-top-r diag-pad">
+      <div class="inner">
+        <span class="section-label reveal">Education</span>
+        <h2 class="section-title reveal">
+          Academic <span class="dim">background</span>
+        </h2>
+        <div class="edu-grid">
+          <div class="edu-card reveal">
+            <div class="edu-date">2026 – 2027 (Expected)</div>
+            <div class="edu-degree">
+              MSc Data Science and Artificial Intelligence
+            </div>
+            <div class="edu-uni">Aston University, Birmingham, UK</div>
+            <ul class="edu-bullets">
+              <li>
+                Machine learning, NLP, large language models, agentic AI
+                systems, knowledge representation and data pipeline
+                architecture.
+              </li>
+              <li>
+                Exploring RAG architectures, vector-enabled retrieval and
+                autonomous agent design — applied directly to freelance
+                projects.
+              </li>
+            </ul>
+          </div>
+          <div class="edu-card reveal">
+            <div class="edu-date">2019 – 2022</div>
+            <div class="edu-degree">
+              Bachelor of Computer Applications (BCA)
+            </div>
+            <div class="edu-uni">Bangalore University, India</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="diag-top diag-pad">
+      <canvas id="data-canvas"></canvas>
+      <div class="contact-inner">
+        <div class="contact-grid">
+          <div class="reveal">
+            <span class="section-label">Let's Connect</span>
+            <div class="big-text">Open to<br /><span>work.</span></div>
+            <div class="avail-pill">
+              Available · Student Visa · Up to 20hrs/week
+            </div>
+            <p>
+              Looking for Applied AI Developer internships, part-time or
+              graduate roles in the UK. Open to hybrid or on-site roles across
+              the UK.
+            </p>
+            <div class="hero-actions">
+              <a
+                href="mailto:shankar64bitcomputing@gmail.com"
+                class="btn btn-primary mag-btn"
+                >Hire Me →</a
+              >
+            </div>
+          </div>
+          <div class="contact-links reveal">
+            <a
+              href="mailto:shankar64bitcomputing@gmail.com"
+              class="contact-link"
+            >
+              <span class="contact-link-icon">✉</span
+              >shankar64bitcomputing@gmail.com
+            </a>
+            <a
+              href="https://github.com/shankar64bit"
+              target="_blank"
+              class="contact-link"
+            >
+              <span class="contact-link-icon">⌨</span>github.com/shankar64bit
+            </a>
+            <a
+              href="https://shankar64bit.github.io/portfolio-uk"
+              target="_blank"
+              class="contact-link"
+            >
+              <span class="contact-link-icon">🌐</span
+              >shankar64bit.github.io/portfolio-uk
+            </a>
+            <a href="tel:+447344721899" class="contact-link">
+              <span class="contact-link-icon">📞</span>+44 7344 721899
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © 2026 Shankar Mallesh · Applied AI Developer · Birmingham, UK
+    </footer>
+
+    <script>
+      /* ═══════════════════════════════════════════
+   1. WEBGL DOMAIN-WARP FLUID SHADER
+═══════════════════════════════════════════ */
+      (function () {
+        const canvas = document.getElementById("gl-canvas");
+        const gl = canvas.getContext("webgl");
+        if (!gl) return;
+
+        function resize() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        const vs = `
+    attribute vec2 a_pos;
+    void main(){ gl_Position = vec4(a_pos, 0.0, 1.0); }
+  `;
+        const fs = `
+    precision highp float;
+    uniform float u_t;
+    uniform vec2  u_res;
+    uniform vec2  u_mouse;
+
+    float hash(vec2 p){
+      p = fract(p * vec2(443.897, 397.297));
+      p += dot(p.xy, p.yx + 19.19);
+      return fract(p.x * p.y);
+    }
+    float noise(vec2 p){
+      vec2 i = floor(p), f = fract(p);
+      f = f*f*(3.0-2.0*f);
+      return mix(
+        mix(hash(i),hash(i+vec2(1,0)),f.x),
+        mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),
+        f.y
+      );
+    }
+    float fbm(vec2 p){
+      float v=0.0, a=0.5;
+      mat2 m = mat2(1.6,1.2,-1.2,1.6);
+      for(int i=0;i<5;i++){
+        v += a*noise(p);
+        p  = m*p;
+        a *= 0.5;
+      }
+      return v;
+    }
+    void main(){
+      vec2 uv = gl_FragCoord.xy / u_res;
+      vec2 ms = u_mouse / u_res;
+      uv.y = 1.0 - uv.y;
+
+      float t = u_t * 0.1;
+      vec2 q = vec2(fbm(uv + t), fbm(uv + vec2(5.2,1.3) + t));
+      vec2 r = vec2(
+        fbm(uv + 4.0*q + vec2(1.7,9.2) + 0.15*t),
+        fbm(uv + 4.0*q + vec2(8.3,2.8) + 0.13*t)
+      );
+      float f = fbm(uv + 4.0*r);
+
+      // Mouse attraction
+      float md = length(uv - ms);
+      f += 0.2 * exp(-md * 5.0);
+
+      // Map to very dark colored fluid
+      vec3 c = vec3(0.01, 0.015, 0.03);
+      c = mix(c, vec3(0.0, 0.25, 0.5),  smoothstep(0.2, 0.55, f));
+      c = mix(c, vec3(0.6, 0.04, 0.35), smoothstep(0.6, 0.85, f));
+      c = mix(c, vec3(0.0, 0.8,  0.4),  smoothstep(0.85,1.0,  f));
+      c *= 0.28;
+      gl_FragColor = vec4(c, 1.0);
+    }
+  `;
+
+        function mkShader(type, src) {
+          const s = gl.createShader(type);
+          gl.shaderSource(s, src);
+          gl.compileShader(s);
+          return s;
+        }
+        const prog = gl.createProgram();
+        gl.attachShader(prog, mkShader(gl.VERTEX_SHADER, vs));
+        gl.attachShader(prog, mkShader(gl.FRAGMENT_SHADER, fs));
+        gl.linkProgram(prog);
+        gl.useProgram(prog);
+
+        const buf = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+        gl.bufferData(
+          gl.ARRAY_BUFFER,
+          new Float32Array([-1, -1, 3, -1, -1, 3]),
+          gl.STATIC_DRAW,
+        );
+        const loc = gl.getAttribLocation(prog, "a_pos");
+        gl.enableVertexAttribArray(loc);
+        gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+        const uT = gl.getUniformLocation(prog, "u_t");
+        const uRes = gl.getUniformLocation(prog, "u_res");
+        const uMou = gl.getUniformLocation(prog, "u_mouse");
+
+        let mx = 0,
+          my = 0;
+        document.addEventListener("mousemove", (e) => {
+          mx = e.clientX;
+          my = e.clientY;
+        });
+
+        function loop(ts) {
+          gl.uniform1f(uT, ts * 0.001);
+          gl.uniform2f(uRes, canvas.width, canvas.height);
+          gl.uniform2f(uMou, mx, my);
+          gl.drawArrays(gl.TRIANGLES, 0, 3);
+          requestAnimationFrame(loop);
+        }
+        requestAnimationFrame(loop);
+      })();
+
+      /* ═══════════════════════════════════════════
+   2. CUSTOM CURSOR (GOO BLOB)
+═══════════════════════════════════════════ */
+      const blob = document.getElementById("cursor-blob");
+      const dot = document.getElementById("cursor-dot");
+      let bx = 0,
+        by = 0,
+        mx2 = 0,
+        my2 = 0;
+
+      document.addEventListener("mousemove", (e) => {
+        mx2 = e.clientX;
+        my2 = e.clientY;
+      });
+
+      (function blobLoop() {
+        bx += (mx2 - bx) * 0.1;
+        by += (my2 - by) * 0.1;
+        blob.style.left = bx + "px";
+        blob.style.top = by + "px";
+        dot.style.left = mx2 + "px";
+        dot.style.top = my2 + "px";
+        requestAnimationFrame(blobLoop);
+      })();
+
+      document.querySelectorAll("a,button").forEach((el) => {
+        el.addEventListener("mouseenter", () =>
+          document.body.classList.add(
+            el.classList.contains("btn") ? "hover-btn" : "hover-link",
+          ),
+        );
+        el.addEventListener("mouseleave", () =>
+          document.body.classList.remove("hover-btn", "hover-link"),
+        );
+      });
+
+      /* ═══════════════════════════════════════════
+   3. KINETIC LETTER PHYSICS
+═══════════════════════════════════════════ */
+      (function () {
+        const name1 = "SHANKAR";
+        const name2 = "MALLESH";
+        const r1 = document.getElementById("row-1");
+        const r2 = document.getElementById("row-2");
+
+        function makeLetters(word, container, accentIndices) {
+          [...word].forEach((ch, i) => {
+            const s = document.createElement("span");
+            s.className =
+              "k-letter" + (accentIndices.includes(i) ? " accent" : "");
+            s.textContent = ch;
+            container.appendChild(s);
+          });
+        }
+        makeLetters(name1, r1, [0, 3, 6]);
+        makeLetters(name2, r2, [1, 4, 6]);
+
+        const letters = [...document.querySelectorAll(".k-letter")];
+
+        // Spring state
+        const state = letters.map(() => ({
+          x: 0,
+          y: 0,
+          vx: 0,
+          vy: 0,
+          nx: null,
+          ny: null,
+        }));
+
+        let pmx = -9999,
+          pmy = -9999;
+        document.addEventListener("mousemove", (e) => {
+          pmx = e.clientX;
+          pmy = e.clientY;
+        });
+
+        function updateLetters() {
+          letters.forEach((el, i) => {
+            const s = state[i];
+            const r = el.getBoundingClientRect();
+
+            // Natural center (account for current translation)
+            const cx = r.left + r.width / 2 - s.x;
+            const cy = r.top + r.height / 2 - s.y;
+
+            const dx = pmx - (cx + s.x);
+            const dy = pmy - (cy + s.y);
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            const R = 140;
+
+            if (dist < R) {
+              const f = Math.pow(1 - dist / R, 1.8) * 18;
+              s.vx -= (dx / dist) * f;
+              s.vy -= (dy / dist) * f;
+            }
+
+            // Spring return
+            s.vx -= s.x * 0.1;
+            s.vy -= s.y * 0.1;
+
+            // Damping
+            s.vx *= 0.82;
+            s.vy *= 0.82;
+
+            s.x += s.vx;
+            s.y += s.vy;
+
+            el.style.transform = `translate(${s.x.toFixed(2)}px,${s.y.toFixed(2)}px)`;
+          });
+          requestAnimationFrame(updateLetters);
+        }
+        updateLetters();
+      })();
+
+      /* ═══════════════════════════════════════════
+   4. TYPED SUBTITLE
+═══════════════════════════════════════════ */
+      (function () {
+        const phrases = [
+          "Applied AI Developer & MSc Data Science & AI",
+          "Building LLM-integrated & agentic applications",
+          "Turning real problems into intelligent systems",
+          "Full-stack · Python · React · NLP · RAG",
+        ];
+        let pi = 0,
+          ci = 0,
+          del = false;
+        const el = document.getElementById("hero-typed");
+        function type() {
+          const cur = phrases[pi];
+          el.textContent = del ? cur.slice(0, ci) : cur.slice(0, ci);
+          if (!del) {
+            ci++;
+            if (ci > cur.length) {
+              del = true;
+              setTimeout(type, 2200);
+              return;
+            }
+            setTimeout(type, 40);
+          } else {
+            ci--;
+            if (ci < 0) {
+              del = false;
+              pi = (pi + 1) % phrases.length;
+              setTimeout(type, 350);
+              return;
+            }
+            setTimeout(type, 16);
+          }
+        }
+        setTimeout(type, 1400);
+      })();
+
+      /* ═══════════════════════════════════════════
+   5. TERMINAL ANIMATION
+═══════════════════════════════════════════ */
+      (function () {
+        const out = document.getElementById("terminal-out");
+        const lines = [
+          { t: "prompt", text: "$ ./init_profile.sh" },
+          { t: "comment", text: "# Loading developer profile..." },
+          { t: "out", text: "→ Name: Shankar Mallesh" },
+          { t: "out", text: "→ Role: Applied AI Developer" },
+          { t: "out", text: "→ Stack: Python · React · LLMs · RAG" },
+          { t: "comment", text: "# Running capability scan..." },
+          { t: "out", text: "✓ LLM Integration         [██████████] 94%" },
+          { t: "out", text: "✓ Agentic Workflows        [█████████░] 89%" },
+          { t: "out", text: "✓ Full-Stack Development   [████████░░] 85%" },
+          { t: "out", text: "✓ NLP & Data Pipelines     [█████████░] 87%" },
+          { t: "comment", text: "# Status check..." },
+          { t: "green", text: "✓ Available · Birmingham · Up to 20hrs/wk" },
+        ];
+        let li = 0,
+          ci2 = 0;
+        function typeTerminal() {
+          if (li >= lines.length) return;
+          const line = lines[li];
+          const current = out.innerHTML;
+          const full = line.text;
+          if (ci2 === 0) {
+            const cls =
+              line.t === "prompt"
+                ? "t-prompt"
+                : line.t === "comment"
+                  ? "t-comment"
+                  : line.t === "green"
+                    ? 'style="color:var(--green)"'
+                    : "";
+            out.innerHTML += `<div ${cls.startsWith("style") ? cls : `class="${cls}"`}></div>`;
+          }
+          const divs = out.querySelectorAll("div");
+          const cur = divs[divs.length - 1];
+          cur.textContent = full.slice(0, ci2 + 1);
+          ci2++;
+          if (ci2 >= full.length) {
+            li++;
+            ci2 = 0;
+            setTimeout(typeTerminal, li === 0 ? 300 : 120);
+          } else {
+            setTimeout(typeTerminal, line.t === "out" ? 18 : 24);
+          }
+        }
+
+        const termObserver = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting) {
+              typeTerminal();
+              termObserver.disconnect();
+            }
+          },
+          { threshold: 0.3 },
+        );
+        if (out) termObserver.observe(out);
+      })();
+
+      /* ═══════════════════════════════════════════
+   6. MAGNETIC BUTTONS
+═══════════════════════════════════════════ */
+      document.querySelectorAll(".mag-btn").forEach((btn) => {
+        btn.addEventListener("mousemove", (e) => {
+          const r = btn.getBoundingClientRect();
+          const dx = (e.clientX - r.left - r.width / 2) * 0.35;
+          const dy = (e.clientY - r.top - r.height / 2) * 0.35;
+          btn.style.transform = `translate(${dx}px,${dy}px)`;
+        });
+        btn.addEventListener("mouseleave", () => {
+          btn.style.transform = "";
+          btn.style.transition = "transform .5s cubic-bezier(.16,1,.3,1)";
+          setTimeout(() => (btn.style.transition = ""), 520);
+        });
+        btn.addEventListener(
+          "mouseenter",
+          () => (btn.style.transition = "transform .15s linear"),
+        );
+      });
+
+      /* ═══════════════════════════════════════════
+   7. HOLOGRAPHIC CARD EFFECT
+═══════════════════════════════════════════ */
+      document.querySelectorAll(".holo-card,.edu-card").forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width;
+          const py = (e.clientY - r.top) / r.height;
+          const rx = (py - 0.5) * -14;
+          const ry = (px - 0.5) * 14;
+          const angle =
+            Math.atan2(
+              e.clientY - (r.top + r.height / 2),
+              e.clientX - (r.left + r.width / 2),
+            ) *
+            (180 / Math.PI);
+          card.style.transform = `perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
+          card.style.setProperty("--holo-angle", angle + "deg");
+          card.style.setProperty("--mx", px * 100 + "%");
+          card.style.setProperty("--my", py * 100 + "%");
+        });
+        card.addEventListener("mouseleave", () => {
+          card.style.transform = "";
+          card.style.transition =
+            "transform .6s cubic-bezier(.16,1,.3,1), box-shadow .3s, border-color .3s";
+          setTimeout(() => (card.style.transition = ""), 620);
+        });
+        card.addEventListener(
+          "mouseenter",
+          () => (card.style.transition = "transform .12s linear"),
+        );
+      });
+
+      /* ═══════════════════════════════════════════
+   8. DATA STREAM CANVAS (CONTACT)
+═══════════════════════════════════════════ */
+      (function () {
+        const canvas = document.getElementById("data-canvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        const strings = [
+          "PYTHON",
+          "REACT",
+          "LLM",
+          "RAG",
+          "NLP",
+          "AI",
+          "AGENTIC",
+          "SQL",
+          "SUPABASE",
+          "BIRMINGHAM",
+          "SHANKAR",
+          "MALLESH",
+          "NEURAL",
+          "FORGE",
+          "VECTOR",
+          "TYPESCRIPT",
+          "FLUTTER",
+          "CLAUDE",
+        ];
+        let cols, drops;
+
+        function setup() {
+          canvas.width = canvas.offsetWidth;
+          canvas.height = canvas.offsetHeight;
+          const fz = 13;
+          cols = Math.floor(canvas.width / fz);
+          drops = Array.from(
+            { length: cols },
+            () => (Math.random() * -canvas.height) / fz,
+          );
+        }
+        setup();
+        new ResizeObserver(setup).observe(canvas);
+
+        function draw() {
+          ctx.fillStyle = "rgba(8,14,26,0.18)";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.font = '12px "Space Mono",monospace';
+          const fz = 13;
+          drops.forEach((y, i) => {
+            const word = strings[Math.floor(Math.random() * strings.length)];
+            const alpha = Math.random() > 0.97 ? 1 : 0.3 + Math.random() * 0.3;
+            ctx.fillStyle = `rgba(0,229,255,${alpha})`;
+            ctx.fillText(
+              word[Math.floor(Math.random() * word.length)],
+              i * fz,
+              y * fz,
+            );
+            if (y * fz > canvas.height && Math.random() > 0.98) drops[i] = 0;
+            drops[i] += 0.4;
+          });
+          requestAnimationFrame(draw);
+        }
+
+        const obs = new IntersectionObserver((e) => {
+          if (e[0].isIntersecting) {
+            draw();
+            obs.disconnect();
+          }
+        });
+        obs.observe(canvas);
+      })();
+
+      /* ═══════════════════════════════════════════
+   9. SCROLL PROGRESS + NAV
+═══════════════════════════════════════════ */
+      const nav = document.getElementById("navbar");
+      const sb = document.getElementById("scroll-bar");
+      window.addEventListener(
+        "scroll",
+        () => {
+          const pct =
+            (window.scrollY /
+              (document.body.scrollHeight - window.innerHeight)) *
+            100;
+          sb.style.width = pct + "%";
+          nav.classList.toggle("solid", window.scrollY > 60);
+        },
+        { passive: true },
+      );
+
+      /* ═══════════════════════════════════════════
+   10. ANIMATED COUNTERS
+═══════════════════════════════════════════ */
+      function animCount(el, target, dur = 1400) {
+        const start = performance.now();
+        const upd = (now) => {
+          const p = Math.min((now - start) / dur, 1);
+          const e = 1 - Math.pow(1 - p, 4);
+          el.textContent = Math.round(e * target);
+          if (p < 1) requestAnimationFrame(upd);
+          else el.textContent = target;
+        };
+        requestAnimationFrame(upd);
+      }
+
+      /* ═══════════════════════════════════════════
+   11. INTERSECTION OBSERVER (REVEAL + COUNTER)
+═══════════════════════════════════════════ */
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("visible");
+            const counters = entry.target.querySelectorAll
+              ? entry.target.querySelectorAll("[data-count]")
+              : [];
+            counters.forEach((c) => animCount(c, parseInt(c.dataset.count)));
+            if (entry.target.dataset.count)
+              animCount(entry.target, parseInt(entry.target.dataset.count));
+            observer.unobserve(entry.target);
+          });
+        },
+        { threshold: 0.12 },
+      );
+
+      document
+        .querySelectorAll(
+          ".reveal, .holo-card, .timeline-item, .edu-card, .contact-link",
+        )
+        .forEach((el) => observer.observe(el));
+      document
+        .querySelectorAll("[data-count]")
+        .forEach((el) => observer.observe(el));
+
+      /* ═══════════════════════════════════════════
+   12. PARALLAX HERO ELEMENTS ON MOUSE
+═══════════════════════════════════════════ */
+      document.addEventListener(
+        "mousemove",
+        (e) => {
+          const cx = window.innerWidth / 2,
+            cy = window.innerHeight / 2;
+          const dx = (e.clientX - cx) / cx,
+            dy = (e.clientY - cy) / cy;
+          const badge = document.querySelector(".hero-eyebrow");
+          if (badge)
+            badge.style.transform = `translate(${dx * 6}px,${dy * 6}px)`;
+        },
+        { passive: true },
+      );
+    </script>
+  </body>
+</html>
