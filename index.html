@@ -46,7 +46,7 @@
         cursor: none;
       }
 
-      /* ── CUSTOM CURSOR ── */
+      /* ── CURSOR ── */
       #cursor {
         position: fixed;
         width: var(--cursor-size);
@@ -105,7 +105,7 @@
         box-shadow: 0 0 8px var(--accent);
       }
 
-      /* ── CANVAS BACKGROUND ── */
+      /* ── CANVAS ── */
       #particle-canvas {
         position: fixed;
         inset: 0;
@@ -114,7 +114,7 @@
         opacity: 0.5;
       }
 
-      /* ── NOISE OVERLAY ── */
+      /* ── NOISE ── */
       body::after {
         content: "";
         position: fixed;
@@ -144,7 +144,6 @@
       nav.scrolled {
         padding: 0.8rem 4rem;
       }
-
       .nav-logo {
         font-family: "Syne", sans-serif;
         font-weight: 800;
@@ -168,7 +167,6 @@
       .nav-logo:hover::after {
         transform: scaleX(1);
       }
-
       .nav-links {
         display: flex;
         gap: 2.5rem;
@@ -213,8 +211,6 @@
         position: relative;
         overflow: hidden;
       }
-
-      /* Animated gradient orbs */
       .orb {
         position: absolute;
         border-radius: 50%;
@@ -250,7 +246,6 @@
         animation-duration: 14s;
         opacity: 0.07;
       }
-
       @keyframes orbFloat {
         0%,
         100% {
@@ -263,7 +258,6 @@
           transform: translate(-20px, 20px) scale(0.95);
         }
       }
-
       .hero-grid {
         position: absolute;
         inset: 0;
@@ -277,13 +271,11 @@
           transparent 80%
         );
       }
-
       .hero-content {
         position: relative;
         max-width: 820px;
         z-index: 1;
       }
-
       .hero-badge {
         display: inline-flex;
         align-items: center;
@@ -308,7 +300,6 @@
         animation: pulse 2s infinite;
         box-shadow: 0 0 8px var(--accent3);
       }
-
       @keyframes pulse {
         0%,
         100% {
@@ -320,7 +311,6 @@
           transform: scale(1.5);
         }
       }
-
       .hero h1 {
         font-family: "Syne", sans-serif;
         font-size: clamp(3.5rem, 8vw, 6.5rem);
@@ -331,7 +321,6 @@
         opacity: 0;
         animation: fadeUp 0.7s 0.35s ease forwards;
       }
-
       .hero h1 .line-1 {
         display: block;
         color: var(--text);
@@ -361,12 +350,9 @@
           background-position: 100% 50%;
         }
       }
-
-      /* Scramble container */
       #scramble-name {
         display: inline-block;
       }
-
       .hero-sub {
         font-size: 1.1rem;
         color: var(--muted);
@@ -377,7 +363,6 @@
         opacity: 0;
         animation: fadeUp 0.7s 0.5s ease forwards;
       }
-
       .hero-actions {
         display: flex;
         gap: 1rem;
@@ -385,8 +370,6 @@
         opacity: 0;
         animation: fadeUp 0.7s 0.65s ease forwards;
       }
-
-      /* Typing cursor for subtitle */
       .typed-cursor {
         display: inline-block;
         width: 2px;
@@ -405,7 +388,6 @@
           opacity: 0;
         }
       }
-
       @keyframes fadeUp {
         from {
           opacity: 0;
@@ -445,11 +427,9 @@
       .btn:hover::before {
         transform: translateX(110%) skewX(-15deg);
       }
-
       .btn-primary {
         background: var(--accent);
         color: #fff;
-        box-shadow: 0 0 0 rgba(79, 156, 249, 0);
       }
       .btn-primary:hover {
         transform: translateY(-3px);
@@ -457,7 +437,6 @@
           0 12px 32px rgba(79, 156, 249, 0.4),
           0 0 0 1px rgba(79, 156, 249, 0.5);
       }
-
       .btn-outline {
         background: transparent;
         color: var(--text);
@@ -468,7 +447,6 @@
         color: var(--accent);
         transform: translateY(-3px);
       }
-
       .btn-download {
         background: linear-gradient(
           135deg,
@@ -523,7 +501,6 @@
         position: relative;
         z-index: 1;
       }
-
       .section-label {
         display: inline-block;
         font-size: 0.72rem;
@@ -545,7 +522,6 @@
         height: 1px;
         background: var(--accent);
       }
-
       .section-title {
         font-family: "Syne", sans-serif;
         font-size: clamp(2rem, 4vw, 3rem);
@@ -570,7 +546,6 @@
         max-width: 1100px;
         margin: 0 auto;
       }
-
       .about-text p {
         color: var(--muted);
         margin-bottom: 1.1rem;
@@ -582,14 +557,11 @@
         color: var(--text);
         font-weight: 500;
       }
-
       .about-stats {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1.2rem;
       }
-
-      /* 3D Tilt cards */
       .stat-card {
         background: var(--bg);
         border: 1px solid var(--border);
@@ -605,7 +577,6 @@
         border-color: rgba(79, 156, 249, 0.4);
         box-shadow: 0 20px 60px rgba(79, 156, 249, 0.12);
       }
-
       .stat-number {
         font-family: "Syne", sans-serif;
         font-size: 2.4rem;
@@ -630,13 +601,11 @@
         margin: 0 auto;
         padding: 6rem 4rem;
       }
-
       .skills-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
         gap: 1.2rem;
       }
-
       .skill-card {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -668,7 +637,6 @@
         background: var(--surface2);
         box-shadow: 0 20px 60px var(--glow);
       }
-
       .skill-icon {
         font-size: 1.8rem;
         margin-bottom: 0.9rem;
@@ -722,6 +690,7 @@
         margin: 0 auto;
       }
 
+      /* ── SHARED TIMELINE ── */
       .timeline {
         position: relative;
         padding-left: 2.5rem;
@@ -740,7 +709,6 @@
           transparent
         );
       }
-
       .timeline-item {
         position: relative;
         padding-bottom: 3rem;
@@ -767,7 +735,6 @@
           0 0 0 6px rgba(79, 156, 249, 0.2),
           0 0 20px rgba(79, 156, 249, 0.5);
       }
-
       .timeline-date {
         font-size: 0.76rem;
         color: var(--accent);
@@ -788,7 +755,6 @@
         margin-bottom: 1rem;
         font-style: italic;
       }
-
       .timeline-bullets {
         list-style: none;
         display: flex;
@@ -815,6 +781,105 @@
         color: #9ba8c0;
       }
 
+      /* ── PROJECT DOT ── */
+      #projects .timeline-item::before {
+        background: var(--accent2);
+        box-shadow:
+          0 0 0 4px rgba(167, 139, 250, 0.15),
+          0 0 12px rgba(167, 139, 250, 0.3);
+      }
+      #projects .timeline-item:hover::before {
+        box-shadow:
+          0 0 0 6px rgba(167, 139, 250, 0.2),
+          0 0 20px rgba(167, 139, 250, 0.5);
+      }
+      #projects .timeline::before {
+        background: linear-gradient(
+          to bottom,
+          var(--accent2),
+          var(--accent3),
+          transparent
+        );
+      }
+      #projects .timeline-date {
+        color: var(--accent2);
+      }
+      #projects .timeline-bullets li::before {
+        color: var(--accent2);
+      }
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-top: 0.75rem;
+      }
+
+      /* ── CERTIFICATIONS ── */
+      #certifications {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 6rem 4rem;
+      }
+      .cert-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 2rem 2.2rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 1.6rem;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        max-width: 640px;
+      }
+      .cert-card:hover {
+        border-color: rgba(52, 211, 153, 0.35);
+        transform: translateY(-4px);
+        box-shadow: 0 20px 60px rgba(52, 211, 153, 0.1);
+      }
+      .cert-icon {
+        font-size: 2.2rem;
+        flex-shrink: 0;
+        margin-top: 0.1rem;
+      }
+      .cert-title {
+        font-family: "Syne", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+      .cert-issuer {
+        font-size: 0.84rem;
+        color: var(--muted);
+        font-style: italic;
+        margin-bottom: 0.5rem;
+      }
+      .cert-date {
+        font-size: 0.74rem;
+        color: var(--accent3);
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.75rem;
+      }
+      .cert-desc {
+        font-size: 0.85rem;
+        color: var(--muted);
+        font-weight: 300;
+        line-height: 1.7;
+        margin-bottom: 0.75rem;
+      }
+      .cert-link {
+        font-size: 0.8rem;
+        color: var(--accent);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(79, 156, 249, 0.3);
+        transition: border-color 0.2s;
+        cursor: none;
+      }
+      .cert-link:hover {
+        border-color: var(--accent);
+      }
+
       /* ── EDUCATION ── */
       #education {
         max-width: 1100px;
@@ -826,7 +891,6 @@
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
       }
-
       .edu-card {
         background: var(--surface);
         border: 1px solid var(--border);
@@ -858,7 +922,6 @@
         transform: translateY(-6px);
         box-shadow: 0 20px 60px rgba(167, 139, 250, 0.1);
       }
-
       .edu-degree {
         font-family: "Syne", sans-serif;
         font-size: 1.1rem;
@@ -917,7 +980,6 @@
         font-weight: 300;
         line-height: 1.9;
       }
-
       .contact-links {
         display: flex;
         gap: 1rem;
@@ -975,7 +1037,7 @@
         z-index: 1;
       }
 
-      /* ── SCROLL REVEAL ── */
+      /* ── REVEAL ── */
       .reveal {
         opacity: 0;
         transform: translateY(36px);
@@ -987,8 +1049,6 @@
         opacity: 1;
         transform: none;
       }
-
-      /* Stagger children */
       .skills-grid .reveal:nth-child(1) {
         transition-delay: 0.05s;
       }
@@ -1023,7 +1083,7 @@
         transition-delay: 0.25s;
       }
 
-      /* ── GLITCH HOVER on hero name ── */
+      /* ── GLITCH ── */
       .glitch {
         position: relative;
         display: inline-block;
@@ -1117,7 +1177,8 @@
           padding-right: 1.5rem;
         }
         #skills,
-        #education {
+        #education,
+        #certifications {
           padding-left: 1.5rem;
           padding-right: 1.5rem;
         }
@@ -1142,14 +1203,9 @@
     </style>
   </head>
   <body>
-    <!-- CURSOR -->
     <div id="cursor"></div>
     <div id="cursor-ring"></div>
-
-    <!-- SCROLL PROGRESS -->
     <div id="scroll-progress"></div>
-
-    <!-- PARTICLE CANVAS -->
     <canvas id="particle-canvas"></canvas>
 
     <!-- NAV -->
@@ -1159,6 +1215,8 @@
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#certifications">Certifications</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#contact">Contact</a></li>
         <li>
@@ -1189,15 +1247,12 @@
         <div class="hero-actions">
           <a href="#experience" class="btn btn-primary">View My Work ↓</a>
           <a
-            href="Shankar_Mallesh_CV_v1_professional.pdf"
+            href="Shankar_Mallesh_CV.pdf"
             target="_blank"
             class="btn btn-download"
             >👁 View CV</a
           >
-          <a
-            href="Shankar_Mallesh_CV_v1_professional.pdf"
-            download
-            class="btn btn-outline"
+          <a href="Shankar_Mallesh_CV.pdf" download class="btn btn-outline"
             >↓ Download CV</a
           >
           <a
@@ -1232,7 +1287,7 @@
             With 2+ years of professional experience, I build
             <strong>AI-integrated, full-stack applications</strong> in
             production — from LLM pipelines and agentic workflow systems to
-            document processing tools and data automation platforms.
+            financial data platforms and template marketplaces.
           </p>
           <p>
             I work across
@@ -1247,11 +1302,14 @@
         </div>
         <div class="about-stats reveal">
           <div class="stat-card tilt-card">
-            <span class="stat-number" data-count="2">0</span>+
+            <div class="stat-number">
+              <span data-count="2">0</span><span class="suffix">+</span>
+            </div>
+
             <div class="stat-label">Years Professional Experience</div>
           </div>
           <div class="stat-card tilt-card">
-            <span class="stat-number" data-count="3">0</span>
+            <span class="stat-number" data-count="2">0</span>
             <div class="stat-label">Live Production Roles</div>
           </div>
           <div class="stat-card tilt-card">
@@ -1280,7 +1338,8 @@
             <div class="skill-tags">
               <span class="tag">Python</span><span class="tag">JavaScript</span
               ><span class="tag">TypeScript</span><span class="tag">Dart</span
-              ><span class="tag">Flutter</span><span class="tag">React</span>
+              ><span class="tag">Flutter</span><span class="tag">React</span
+              ><span class="tag">Next.js</span>
             </div>
           </div>
           <div class="skill-card tilt-card reveal">
@@ -1290,7 +1349,7 @@
               <span class="tag">SQL</span><span class="tag">PostgreSQL</span
               ><span class="tag">REST APIs</span
               ><span class="tag">Data Pipelines</span
-              ><span class="tag">Supabase</span
+              ><span class="tag">ETL</span><span class="tag">Supabase</span
               ><span class="tag">Firebase</span>
             </div>
           </div>
@@ -1312,10 +1371,10 @@
             <div class="skill-title">Tools &amp; Practices</div>
             <div class="skill-tags">
               <span class="tag">Git/GitHub</span
-              ><span class="tag tag-ai">AI-assisted Dev (Claude, Copilot)</span
-              ><span class="tag">Vector Databases</span
+              ><span class="tag">JWT Auth</span
+              ><span class="tag tag-ai">AI-assisted Dev</span
               ><span class="tag">Clean Architecture</span
-              ><span class="tag">MVVM</span><span class="tag">Agile</span>
+              ><span class="tag">MVVM</span><span class="tag">Agile/Scrum</span>
             </div>
           </div>
         </div>
@@ -1328,65 +1387,52 @@
         <span class="section-label reveal">Experience</span>
         <h2 class="section-title reveal">Where I've <span>worked</span></h2>
         <div class="timeline">
+          <!-- CircleSave -->
           <div class="timeline-item reveal">
-            <div class="timeline-date">May 2025 – Present · Remote</div>
-            <div class="timeline-role">Full-Stack AI Developer (Freelance)</div>
-            <div class="timeline-company">Circlesave · USA</div>
-            <ul class="timeline-bullets">
-              <li>
-                Built a community-based lending platform using React, Supabase
-                and PostgreSQL, designing SQL schemas for secure financial data
-                management and transaction processing.
-              </li>
-              <li>
-                Designed and implemented agentic AI controls for admin and user
-                workflows, automating complex operational decisions and
-                significantly reducing manual intervention.
-              </li>
-              <li>
-                Developed AI-driven data pipelines to process structured
-                transaction data, surfacing actionable insights for operational
-                decision-making.
-              </li>
-              <li>
-                Utilised AI-assisted development tooling (Claude) throughout the
-                build to accelerate delivery, maintain code quality and produce
-                clear technical documentation.
-              </li>
-            </ul>
-          </div>
-          <div class="timeline-item reveal">
-            <div class="timeline-date">Aug 2024 – Dec 2024 · Remote</div>
-            <div class="timeline-role">
-              React Developer — AI Tools Platform (Freelance)
-            </div>
-            <div class="timeline-company">Aplypse · India</div>
-            <ul class="timeline-bullets">
-              <li>
-                Developed a production AI tools and news discovery platform
-                using React, integrating multiple LLM APIs to automate content
-                ingestion, classification and delivery workflows.
-              </li>
-              <li>
-                Built document processing pipelines that extracted and
-                structured content from unstructured sources, directly improving
-                content relevance and user engagement.
-              </li>
-              <li>
-                Applied prompt engineering and agent-style orchestration to
-                automate editorial curation, demonstrating practical LLM tooling
-                experience in a live environment.
-              </li>
-            </ul>
-          </div>
-          <div class="timeline-item reveal">
-            <div class="timeline-date">Aug 2022 – May 2024 · Onsite</div>
-            <div class="timeline-role">
-              Junior Software Developer (Full-time)
-            </div>
+            <div class="timeline-date">May 2025 – Present · Remote, USA</div>
+            <div class="timeline-role">Full-Stack AI Developer</div>
             <div class="timeline-company">
-              ARK Power Solutions Pvt. Ltd. · India
+              CircleSave · Contracted Developer · Next.js · TypeScript ·
+              Supabase · PostgreSQL
             </div>
+            <ul class="timeline-bullets">
+              <li>
+                Designed and implemented production PostgreSQL schemas for a
+                digital savings circle (ROSCA) platform — modelling relational
+                data for member management, contribution tracking, payout
+                scheduling, and full audit logging.
+              </li>
+              <li>
+                Built JWT-based authentication with OTP email verification and
+                role-based access control (Owner / Member), with backend
+                validation of all critical financial actions to prevent
+                unauthorised access and duplicate contributions.
+              </li>
+              <li>
+                Developed automated financial workflows covering contribution
+                tracking, payment confirmation, payout scheduling, and cycle
+                completion validation — enforcing fairness and transparency in
+                multi-member savings rounds.
+              </li>
+              <li>
+                Implemented a real-time notification system for join requests,
+                approvals, and cycle updates; owned ongoing pipeline monitoring
+                and defect resolution to maintain system reliability in
+                production.
+              </li>
+              <li>
+                Collaborated directly with the client to translate business
+                requirements into backend-driven data models and automated
+                workflows, significantly reducing manual operational overhead.
+              </li>
+            </ul>
+          </div>
+
+          <!-- ARK -->
+          <div class="timeline-item reveal">
+            <div class="timeline-date">Aug 2022 – May 2024 · Onsite, India</div>
+            <div class="timeline-role">Junior Software Developer</div>
+            <div class="timeline-company">ARK Power Solutions Pvt. Ltd.</div>
             <ul class="timeline-bullets">
               <li>
                 Developed and maintained cross-platform applications for
@@ -1394,15 +1440,130 @@
                 features from a single shared codebase.
               </li>
               <li>
-                Reduced cross-platform delivery time by approximately 30%
-                through clean architecture practices and shared component
-                design.
+                Reduced cross-platform delivery time by ~30% through clean
+                architecture practices and shared component design.
               </li>
               <li>
-                Supported data migration activities and improved UI
-                responsiveness across production systems serving live customers.
+                Supported data migration activities across production systems,
+                contributing to data integrity validation and troubleshooting
+                during complex migrations.
+              </li>
+              <li>
+                Collaborated within Agile engineering teams on debugging, code
+                reviews and documentation — developing strong practices around
+                data handling and software quality.
               </li>
             </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section
+      id="projects"
+      style="max-width: 1100px; margin: 0 auto; padding: 6rem 4rem"
+    >
+      <span class="section-label reveal">Projects</span>
+      <h2 class="section-title reveal">What I've <span>built</span></h2>
+      <div class="timeline">
+        <!-- Aplypse -->
+        <div class="timeline-item reveal">
+          <div class="timeline-date">Aug 2024 – Present · Solo Project</div>
+          <div class="timeline-role">
+            Aplypse — Template Marketplace for Builders
+          </div>
+          <div class="timeline-company">
+            Actively in development · v1 shipped
+          </div>
+          <ul class="timeline-bullets">
+            <li>
+              Conceived and built a full-stack template marketplace where every
+              listing ships as a complete, scalable product concept — each entry
+              includes a product brief explaining the idea and its potential, a
+              futuristic UI, and clean source code ready to clone and build on.
+            </li>
+            <li>
+              Built the core catalog experience: browsable template cards with
+              live previews, concept briefs, one-click download / git clone, and
+              category filtering across SaaS, fintech, health and productivity
+              verticals.
+            </li>
+            <li>
+              Implemented a gated auth layer — browse and preview freely,
+              download only with a free account — and applied a strict three-bar
+              template philosophy: is the concept real and sellable, is the
+              design ahead of its time, is the code clean enough to build on?
+            </li>
+            <li>
+              Shipped v1 solo (lean, fast) with a deliberate roadmap: v2 targets
+              an AI news &amp; tools directory; v3 introduces community
+              submissions and AI image generation competitions.
+            </li>
+          </ul>
+          <div class="project-tags">
+            <span class="tag">Full-Stack</span><span class="tag">React</span
+            ><span class="tag">Auth</span
+            ><span class="tag tag-ai">LLM Integration</span
+            ><span class="tag">Template Marketplace</span
+            ><span class="tag">Solo Build</span>
+          </div>
+        </div>
+
+        <!-- Placeholder second project -->
+        <div class="timeline-item reveal" style="opacity: 0.55">
+          <div class="timeline-date">2026 · MSc / Side Project</div>
+          <div
+            class="timeline-role"
+            style="display: flex; align-items: center; gap: 0.75rem"
+          >
+            Next Project
+            <span
+              style="
+                font-family: &quot;DM Sans&quot;, sans-serif;
+                font-size: 0.72rem;
+                font-weight: 500;
+                padding: 0.2rem 0.7rem;
+                background: rgba(167, 139, 250, 0.1);
+                border: 1px solid rgba(167, 139, 250, 0.25);
+                border-radius: 100px;
+                color: var(--accent2);
+                letter-spacing: 0.06em;
+              "
+              >IN PROGRESS</span
+            >
+          </div>
+          <div class="timeline-company">Details coming soon</div>
+          <ul class="timeline-bullets">
+            <li>Building something new — check back soon.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section id="certifications">
+      <div style="max-width: 1100px; margin: 0 auto">
+        <span class="section-label reveal">Certifications</span>
+        <h2 class="section-title reveal">Verified <span>credentials</span></h2>
+        <div class="cert-card tilt-card reveal">
+          <div class="cert-icon">🐍</div>
+          <div class="cert-body">
+            <div class="cert-title">Python Developer Certification</div>
+            <div class="cert-issuer">freeCodeCamp.org</div>
+            <div class="cert-date">Issued May 2026</div>
+            <div class="cert-desc">
+              ~300 hours of structured curriculum covering Python fundamentals,
+              data structures, algorithms, and applied projects. Directly
+              reinforces production experience with Pandas, NumPy, and
+              Scikit-learn.
+            </div>
+            <a
+              href="https://freecodecamp.org/certification/fcc-c6094a8d-2c8f-49da-8611-724e5bb551ae/python-v9"
+              target="_blank"
+              class="cert-link"
+              >Verify credential ↗</a
+            >
           </div>
         </div>
       </div>
@@ -1414,27 +1575,35 @@
       <h2 class="section-title reveal">Academic <span>background</span></h2>
       <div class="edu-grid">
         <div class="edu-card tilt-card reveal">
-          <div class="edu-date">2026 – 2027 (Expected)</div>
+          <div class="edu-date">April 2026 – April 2027 (Expected)</div>
           <div class="edu-degree">
-            MSc Data Science and Artificial Intelligence (AI)
+            MSc Data Science and Artificial Intelligence
           </div>
           <div class="edu-uni">Aston University, Birmingham, UK</div>
           <ul class="edu-bullets">
             <li>
-              Key areas: machine learning, NLP, large language models, agentic
-              AI systems, knowledge representation and data pipeline
-              architecture.
+              Key modules: Data Pipeline Architecture, Machine Learning, NLP,
+              Large Language Models, Knowledge Representation, Distributed
+              Systems &amp; Algorithms.
             </li>
             <li>
-              Actively exploring RAG architectures, vector-enabled retrieval and
-              autonomous agent design — applied directly to freelance projects.
+              Applying schema design, retrieval architecture and pipeline
+              automation directly to live production projects alongside academic
+              study.
             </li>
           </ul>
         </div>
         <div class="edu-card tilt-card reveal">
           <div class="edu-date">2019 – 2022</div>
           <div class="edu-degree">Bachelor of Computer Applications (BCA)</div>
-          <div class="edu-uni">Bangalore University, India</div>
+          <div class="edu-uni">Bangalore University, India · First Class</div>
+          <ul class="edu-bullets">
+            <li>
+              Core studies: Database Systems, SQL &amp; Data Modelling,
+              Algorithms &amp; Data Structures, Software Engineering, Operating
+              Systems.
+            </li>
+          </ul>
         </div>
       </div>
     </section>
@@ -1453,6 +1622,12 @@
         <div class="contact-links reveal">
           <a href="mailto:shankar64bitcomputing@gmail.com" class="contact-item"
             >✉️ shankar64bitcomputing@gmail.com</a
+          >
+          <a
+            href="https://linkedin.com/in/shankar-mallesh"
+            target="_blank"
+            class="contact-item"
+            >🔗 linkedin.com/in/shankar-mallesh</a
           >
           <a
             href="https://github.com/shankar64bit"
@@ -1482,21 +1657,19 @@
     </footer>
 
     <script>
-      // ── CUSTOM CURSOR ──
+      // ── CURSOR ──
       const cursor = document.getElementById("cursor");
       const ring = document.getElementById("cursor-ring");
       let mouseX = 0,
-        mouseY = 0;
-      let ringX = 0,
+        mouseY = 0,
+        ringX = 0,
         ringY = 0;
-
       document.addEventListener("mousemove", (e) => {
         mouseX = e.clientX;
         mouseY = e.clientY;
         cursor.style.left = mouseX + "px";
         cursor.style.top = mouseY + "px";
       });
-
       function animateRing() {
         ringX += (mouseX - ringX) * 0.12;
         ringY += (mouseY - ringY) * 0.12;
@@ -1510,30 +1683,28 @@
       const bar = document.getElementById("scroll-progress");
       const nav = document.getElementById("navbar");
       window.addEventListener("scroll", () => {
-        const pct =
+        bar.style.width =
           (window.scrollY / (document.body.scrollHeight - window.innerHeight)) *
-          100;
-        bar.style.width = pct + "%";
+            100 +
+          "%";
         nav.classList.toggle("scrolled", window.scrollY > 50);
       });
 
-      // ── PARTICLE NETWORK CANVAS ──
+      // ── PARTICLES ──
       const canvas = document.getElementById("particle-canvas");
       const ctx = canvas.getContext("2d");
       let W,
         H,
         particles = [];
-      const PARTICLE_COUNT = 70;
-      const MAX_DIST = 130;
-      const ACCENT = "79,156,249";
-
+      const COUNT = 70,
+        MAX_DIST = 130,
+        ACCENT = "79,156,249";
       function resize() {
         W = canvas.width = window.innerWidth;
         H = canvas.height = window.innerHeight;
       }
       resize();
       window.addEventListener("resize", resize);
-
       class Particle {
         constructor() {
           this.reset();
@@ -1559,49 +1730,41 @@
           ctx.fill();
         }
       }
-
-      for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
-
+      for (let i = 0; i < COUNT; i++) particles.push(new Particle());
       let mx = -9999,
         my = -9999;
       document.addEventListener("mousemove", (e) => {
         mx = e.clientX;
         my = e.clientY;
       });
-
       function drawParticles() {
         ctx.clearRect(0, 0, W, H);
-        // mouse-attracted connections
         for (let i = 0; i < particles.length; i++) {
           const p = particles[i];
           p.update();
           p.draw();
-          // connect to nearby particles
           for (let j = i + 1; j < particles.length; j++) {
-            const q = particles[j];
-            const dx = p.x - q.x,
-              dy = p.y - q.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
+            const q = particles[j],
+              dx = p.x - q.x,
+              dy = p.y - q.y,
+              dist = Math.sqrt(dx * dx + dy * dy);
             if (dist < MAX_DIST) {
-              const alpha = (1 - dist / MAX_DIST) * 0.25;
               ctx.beginPath();
               ctx.moveTo(p.x, p.y);
               ctx.lineTo(q.x, q.y);
-              ctx.strokeStyle = `rgba(${ACCENT},${alpha})`;
+              ctx.strokeStyle = `rgba(${ACCENT},${(1 - dist / MAX_DIST) * 0.25})`;
               ctx.lineWidth = 0.8;
               ctx.stroke();
             }
           }
-          // connect to mouse
           const mdx = p.x - mx,
-            mdy = p.y - my;
-          const md = Math.sqrt(mdx * mdx + mdy * mdy);
+            mdy = p.y - my,
+            md = Math.sqrt(mdx * mdx + mdy * mdy);
           if (md < 160) {
-            const alpha = (1 - md / 160) * 0.5;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(mx, my);
-            ctx.strokeStyle = `rgba(167,139,250,${alpha})`;
+            ctx.strokeStyle = `rgba(167,139,250,${(1 - md / 160) * 0.5})`;
             ctx.lineWidth = 0.8;
             ctx.stroke();
           }
@@ -1619,13 +1782,11 @@
         const timer = setInterval(() => {
           const progress = frame / total;
           let result = "";
-          for (let i = 0; i < finalText.length; i++) {
-            if (i < Math.floor(progress * finalText.length)) {
-              result += finalText[i];
-            } else {
-              result += chars[Math.floor(Math.random() * chars.length)];
-            }
-          }
+          for (let i = 0; i < finalText.length; i++)
+            result +=
+              i < Math.floor(progress * finalText.length)
+                ? finalText[i]
+                : chars[Math.floor(Math.random() * chars.length)];
           el.textContent = result;
           frame++;
           if (frame > total) {
@@ -1634,22 +1795,30 @@
           }
         }, 40);
       }
-
-      // Run scramble after load
       window.addEventListener("load", () => {
-        const nameEl = document.getElementById("scramble-name");
-        setTimeout(() => scrambleText(nameEl, "Mallesh", 1400), 800);
+        setTimeout(
+          () =>
+            scrambleText(
+              document.getElementById("scramble-name"),
+              "Mallesh",
+              1400,
+            ),
+          800,
+        );
       });
-
-      // Scramble on hover
-      const glitch = document.getElementById("scramble-name");
       let scrambling = false;
-      glitch.addEventListener("mouseenter", () => {
-        if (scrambling) return;
-        scrambling = true;
-        scrambleText(glitch, "Mallesh", 600);
-        setTimeout(() => (scrambling = false), 700);
-      });
+      document
+        .getElementById("scramble-name")
+        .addEventListener("mouseenter", () => {
+          if (scrambling) return;
+          scrambling = true;
+          scrambleText(
+            document.getElementById("scramble-name"),
+            "Mallesh",
+            600,
+          );
+          setTimeout(() => (scrambling = false), 700);
+        });
 
       // ── TYPED SUBTITLE ──
       const phrases = [
@@ -1662,13 +1831,10 @@
         deleting = false;
       const typedEl = document.getElementById("hero-typed");
       typedEl.innerHTML = '<span class="typed-cursor"></span>';
-
       function type() {
         const current = phrases[phraseIdx];
-        const display = deleting
-          ? current.slice(0, charIdx)
-          : current.slice(0, charIdx);
-        typedEl.innerHTML = display + '<span class="typed-cursor"></span>';
+        typedEl.innerHTML =
+          current.slice(0, charIdx) + '<span class="typed-cursor"></span>';
         if (!deleting) {
           charIdx++;
           if (charIdx > current.length) {
@@ -1690,15 +1856,14 @@
       }
       setTimeout(type, 1200);
 
-      // ── ANIMATED COUNTERS ──
+      // ── COUNTERS ──
       function animateCounter(el, target, duration = 1500) {
         const start = performance.now();
         const update = (now) => {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-          el.textContent = Math.round(eased * target);
-          if (progress < 1) requestAnimationFrame(update);
+          const p = Math.min((now - start) / duration, 1),
+            e = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(e * target);
+          if (p < 1) requestAnimationFrame(update);
           else el.textContent = target;
         };
         requestAnimationFrame(update);
@@ -1707,39 +1872,38 @@
       // ── 3D TILT ──
       function initTilt(el) {
         el.addEventListener("mousemove", (e) => {
-          const rect = el.getBoundingClientRect();
-          const cx = rect.left + rect.width / 2;
-          const cy = rect.top + rect.height / 2;
-          const rx = ((e.clientY - cy) / (rect.height / 2)) * -8;
-          const ry = ((e.clientX - cx) / (rect.width / 2)) * 8;
-          el.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
-          // spotlight
-          const mouseXPct = ((e.clientX - rect.left) / rect.width) * 100;
-          const mouseYPct = ((e.clientY - rect.top) / rect.height) * 100;
-          el.style.setProperty("--mouse-x", mouseXPct + "%");
-          el.style.setProperty("--mouse-y", mouseYPct + "%");
+          const r = el.getBoundingClientRect(),
+            cx = r.left + r.width / 2,
+            cy = r.top + r.height / 2;
+          el.style.transform = `perspective(800px) rotateX(${((e.clientY - cy) / (r.height / 2)) * -8}deg) rotateY(${((e.clientX - cx) / (r.width / 2)) * 8}deg) translateZ(6px)`;
+          el.style.setProperty(
+            "--mouse-x",
+            ((e.clientX - r.left) / r.width) * 100 + "%",
+          );
+          el.style.setProperty(
+            "--mouse-y",
+            ((e.clientY - r.top) / r.height) * 100 + "%",
+          );
         });
         el.addEventListener("mouseleave", () => {
           el.style.transform =
             "perspective(800px) rotateX(0) rotateY(0) translateZ(0)";
-          el.style.transition = "transform 0.5s cubic-bezier(0.16,1,0.3,1)";
+          el.style.transition = "transform .5s cubic-bezier(.16,1,.3,1)";
         });
         el.addEventListener("mouseenter", () => {
           el.style.transition =
-            "transform 0.1s linear, border-color 0.3s, box-shadow 0.3s";
+            "transform .1s linear, border-color .3s, box-shadow .3s";
         });
       }
 
       // ── INTERSECTION OBSERVER ──
-      const reveals = document.querySelectorAll(".reveal, .stat-card");
       const observer = new IntersectionObserver(
         (entries) => {
-          entries.forEach((entry, i) => {
+          entries.forEach((entry) => {
             if (entry.isIntersecting) {
               const el = entry.target;
               setTimeout(() => {
                 el.classList.add("visible");
-                // counter
                 const counter = el.querySelector("[data-count]");
                 if (counter)
                   animateCounter(counter, parseInt(counter.dataset.count));
@@ -1750,21 +1914,19 @@
         },
         { threshold: 0.1 },
       );
-
-      reveals.forEach((el, i) => observer.observe(el));
-
-      // Init tilts
+      document
+        .querySelectorAll(".reveal,.stat-card")
+        .forEach((el) => observer.observe(el));
       document.querySelectorAll(".tilt-card").forEach(initTilt);
 
-      // ── PARALLAX ORBS on mouse ──
+      // ── PARALLAX ORBS ──
       document.addEventListener("mousemove", (e) => {
-        const cx = window.innerWidth / 2;
-        const cy = window.innerHeight / 2;
-        const dx = (e.clientX - cx) / cx;
-        const dy = (e.clientY - cy) / cy;
+        const cx = window.innerWidth / 2,
+          cy = window.innerHeight / 2,
+          dx = (e.clientX - cx) / cx,
+          dy = (e.clientY - cy) / cy;
         document.querySelectorAll(".orb").forEach((orb, i) => {
-          const intensity = (i + 1) * 12;
-          orb.style.transform = `translate(${dx * intensity}px, ${dy * intensity}px)`;
+          orb.style.transform = `translate(${dx * (i + 1) * 12}px,${dy * (i + 1) * 12}px)`;
         });
       });
     </script>
